@@ -1,0 +1,11 @@
+version: '2'
+services:
+    bluesource-postgresql:
+        image: postgres:10.4
+        # volumes:
+        #     - ~/volumes/jhipster/bluesource/postgresql/:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=bluesource
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
