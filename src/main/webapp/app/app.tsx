@@ -20,9 +20,12 @@ import AppRoutes from 'app/routes';
 export interface IAppProps extends StateProps, DispatchProps {}
 
 export class App extends React.Component<IAppProps> {
+
   componentDidMount() {
-    this.props.getSession();
-    this.props.getProfile();
+    if (this.props.isAuthenticated) {
+      this.props.getSession();
+      this.props.getProfile();
+    }
   }
 
   render() {

@@ -52,6 +52,10 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
           <NavbarToggler aria-label="Menu" onClick={this.toggleMenu} />
           <Brand />
 
+          <div className="header-logo-text-container">
+            <h2 className="header-logo-text">Blue Source</h2>
+          </div>
+
           <Input placeholder="search for a project" />
 
           <Collapse isOpen={this.state.menuOpen} navbar>

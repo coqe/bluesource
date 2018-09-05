@@ -283,6 +283,7 @@ ui bootstrap tweaks
 .banner-image {
   width:80%;
   padding-left:100px;
+  height:auto;
   /*height:500px;*/
 }
 
@@ -329,4 +330,15 @@ ui bootstrap tweaks
 .project-explore-button {
   margin: 0 25%;
   width: 80%;
+}
+
+.header-logo-text {
+  color:#333;
+}
+
+.header-logo-text-container {
+  padding-top:.4em;
+  width:20%;
+  display:inline-block;
+  margin-right: 1em;
 }

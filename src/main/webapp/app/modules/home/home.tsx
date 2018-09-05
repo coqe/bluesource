@@ -10,6 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
 import { getSearchEntities, getEntities, reset } from 'app/entities/project/project.reducer';
 
+import { getEntity } from 'app/entities/user-profile/user-profile.reducer';
+
 export interface IHomeProp extends StateProps, DispatchProps {}
 
 export class Home extends React.Component<IHomeProp> {
@@ -19,14 +21,23 @@ export class Home extends React.Component<IHomeProp> {
 
     this.state = {
       currentProjects: [],
-      recommendedProjects: []
+      recommendedProjects: [],
+      receivedProfile: false
     };
   }
 
   componentDidMount() {
     this.props.getSession();
     this.props.getEntities();
-    console.log(this.props.account);
+  }
+
+  componentWillReceiveProps() {
+    console.log("received")
+    console.log(this.props)
+    if (this.state["receivedProfile"] == false && this.props.userId != undefined) {
+      this.setState({receivedProfile: true})
+      this.props.getEntity(this.props.userId);
+    }
   }
 
   languages = () => (
@@ -63,6 +74,16 @@ export class Home extends React.Component<IHomeProp> {
     }
   };
 
+  skills = () => {
+    if (this.props.profile.skills != undefined) {
+      return (
+        this.props.profile.skills.map( (skill, i) => {
+          <h4 key={i}>{skill}</h4>
+        })
+      )
+    }
+  }
+
   render() {
     const { isAuthenticated } = this.props;
     if (!isAuthenticated) {
@@ -71,8 +92,13 @@ export class Home extends React.Component<IHomeProp> {
     return (
       <Row className="projects-container">
         <div>
-          { console.log("data loaded") }
-          { console.log(this.props.projectList)}
+          {/*{ console.log("data loaded") }*/}
+          {/*{ console.log(this.props.projectList)}*/}
+
+          <h4>Welcome back {this.props.account.firstName}!</h4>
+
+          {this.skills()}
+
           <hr />
           <h4>Our Ecosystem</h4>
           <Progress className="card-languages" multi>
@@ -97,9 +123,10 @@ export class Home extends React.Component<IHomeProp> {
           <h4>Latest Projects</h4>
           <h5>{this.props.projectList.length} Result(s)</h5>
 
-          { this.props.projectList.map( (project, i) => (
-              <CardColumns className="projects-current-container">
-                <Card>
+          <CardColumns className="projects-current-container">
+          {
+            this.props.projectList.map( (project, i) => (
+                <Card key={i}>
                   <CardBody>
                     <CardTitle>{project.name}</CardTitle>
                     <CardSubtitle>Card subtitle</CardSubtitle>
@@ -109,9 +136,9 @@ export class Home extends React.Component<IHomeProp> {
                     <Button className="project-explore-button">Explore</Button>
                   </CardBody>
                 </Card>
-              </CardColumns>
             ))
           }
+          </CardColumns>
 
           <hr />
 
@@ -142,16 +169,23 @@ export class Home extends React.Component<IHomeProp> {
   }
 }
 
-const mapStateToProps = storeState => ({
-  account: storeState.authentication.account,
-  isAuthenticated: storeState.authentication.isAuthenticated,
-  projectList: storeState.project.entities
-});
+const mapStateToProps = storeState => {
+  console.log(storeState)
+  return ({
+    account: storeState.authentication.account,
+    userId: storeState.authentication.account.id,
+    isAuthenticated: storeState.authentication.isAuthenticated,
+    projectList: storeState.project.entities,
+    profile: storeState.userProfile
+  });
+}
+
 
 const mapDispatchToProps = {
   getSession,
   getSearchEntities,
-  getEntities
+  getEntities,
+  getEntity
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
