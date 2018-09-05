@@ -255,3 +255,26 @@ ui bootstrap tweaks
 .projects-container {
   padding: 2% 5%;
 }
+
+.login-container {
+  /*padding-top:50px;!**!*/
+  width:40%;
+  background:#F7F8F9;
+  padding:20px;
+  color:#2E2E2E;
+  margin-top:30px;
+}
+
+.login-option {
+  padding:10px 0px;
+}
+.login-options, .login-options a{
+  color: #006fcf;
+  /*font-family: Helvetica Neue, Roboto, Helvetica, sans-serif;*/
+  -webkit-font-smoothing: antialiased;
+}
+.login-button {
+  width:100%;
+  margin-top:30px;
+  height:50px;
+}
