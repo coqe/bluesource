@@ -26,6 +26,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
   banner = () => (
     <div className="home-banner position-relative">
       <h1>{"<"}Dont write code without it{" />"}</h1>
+      <h4>Central hub for inner sourcing and collaboration. Building One community.</h4>
       <div className="banner-container">
         <LoginModal
           // showModal={showModal}
@@ -33,7 +34,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
           handleClose={this.handleClose}
           loginError={this.props.loginError}
         />
-        <img src="content/images/bottle.png" className="banner-image" alt="Logo" />
+        <img src="content/images/worldmap.png" className="banner-image" alt="Logo" />
       </div>
     </div>
   );
