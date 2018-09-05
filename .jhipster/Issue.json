@@ -34,15 +34,15 @@
         },
         {
             "relationshipType": "many-to-one",
+            "relationshipName": "project",
+            "otherEntityName": "project",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
             "relationshipName": "createdBy",
             "otherEntityName": "userProfile",
             "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "project",
-            "otherEntityName": "project",
-            "otherEntityRelationshipName": "issue"
         }
     ],
     "changelogDate": "20180905123954",

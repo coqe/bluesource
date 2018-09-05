@@ -14,24 +14,18 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Repo.
+        Added the entity Project.
     -->
-    <changeSet id="20180905112310-1" author="jhipster">
-        <createTable tableName="repo">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="uri" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
+    <changeSet id="20180905160910-1" author="jhipster">
 
-            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
-        </createTable>
         <loadData encoding="UTF-8"
-                  file="config/liquibase/repos.csv"
+                  file="config/liquibase/user_profiles.csv"
                   separator=";"
-                  tableName="repo"/>
-        
+                  tableName="user_profile"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/projects.csv"
+                  separator=";"
+                  tableName="project"/>
     </changeSet>
-    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

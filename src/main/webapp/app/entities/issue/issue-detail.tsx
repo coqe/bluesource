@@ -44,6 +44,8 @@ export class IssueDetail extends React.Component<IIssueDetailProps> {
               <span id="rewards">Rewards</span>
             </dt>
             <dd>{issueEntity.rewards}</dd>
+            <dt>Project</dt>
+            <dd>{issueEntity.project ? issueEntity.project.name : ''}</dd>
             <dt>Created By</dt>
             <dd>{issueEntity.createdBy ? issueEntity.createdBy.id : ''}</dd>
           </dl>

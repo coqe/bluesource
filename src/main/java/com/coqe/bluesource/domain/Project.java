@@ -75,13 +75,8 @@ public class Project implements Serializable {
     @OneToMany(mappedBy = "project")
     private Set<Comment> comments = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties("creates")
-    private UserProfile createdBy;
-
-    @ManyToOne
-    @JsonIgnoreProperties("projects")
-    private Issue issue;
+    @OneToMany(mappedBy = "project")
+    private Set<Issue> issues = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "project_technologies",
@@ -100,6 +95,10 @@ public class Project implements Serializable {
                joinColumns = @JoinColumn(name = "projects_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "admins_id", referencedColumnName = "id"))
     private Set<UserProfile> admins = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("creates")
+    private UserProfile createdBy;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -291,30 +290,29 @@ public class Project implements Serializable {
         this.comments = comments;
     }
 
-    public UserProfile getCreatedBy() {
-        return createdBy;
+    public Set<Issue> getIssues() {
+        return issues;
     }
 
-    public Project createdBy(UserProfile userProfile) {
-        this.createdBy = userProfile;
+    public Project issues(Set<Issue> issues) {
+        this.issues = issues;
         return this;
     }
 
-    public void setCreatedBy(UserProfile userProfile) {
-        this.createdBy = userProfile;
-    }
-
-    public Issue getIssue() {
-        return issue;
-    }
-
-    public Project issue(Issue issue) {
-        this.issue = issue;
+    public Project addIssue(Issue issue) {
+        this.issues.add(issue);
+        issue.setProject(this);
         return this;
     }
 
-    public void setIssue(Issue issue) {
-        this.issue = issue;
+    public Project removeIssue(Issue issue) {
+        this.issues.remove(issue);
+        issue.setProject(null);
+        return this;
+    }
+
+    public void setIssues(Set<Issue> issues) {
+        this.issues = issues;
     }
 
     public Set<Keyword> getTechnologies() {
@@ -390,6 +388,19 @@ public class Project implements Serializable {
 
     public void setAdmins(Set<UserProfile> userProfiles) {
         this.admins = userProfiles;
+    }
+
+    public UserProfile getCreatedBy() {
+        return createdBy;
+    }
+
+    public Project createdBy(UserProfile userProfile) {
+        this.createdBy = userProfile;
+        return this;
+    }
+
+    public void setCreatedBy(UserProfile userProfile) {
+        this.createdBy = userProfile;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
