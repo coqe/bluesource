@@ -10,7 +10,6 @@
     <include file="config/liquibase/changelog/20180905112309_added_entity_Keyword.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180905112310_added_entity_Repo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180905112311_added_entity_UserProfile.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180905112312_added_entity_Skill.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180905123954_added_entity_Issue.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20180905112307_added_entity_constraints_Project.xml" relativeToChangelogFile="false"/>

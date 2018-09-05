@@ -23,9 +23,6 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/user-profile">
       <FontAwesomeIcon icon="asterisk" />&nbsp;User Profile
     </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/skill">
-      <FontAwesomeIcon icon="asterisk" />&nbsp;Skill
-    </DropdownItem>
     <DropdownItem tag={Link} to="/entity/issue">
       <FontAwesomeIcon icon="asterisk" />&nbsp;Issue
     </DropdownItem>
