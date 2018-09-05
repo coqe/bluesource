@@ -8,6 +8,8 @@ import { Row, Col, Alert, Input, Table, Form, FormGroup, FormText, Label, Button
 
 import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
 
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -21,8 +23,7 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
   constructor(props) {
     super(props)
     this.state = {
-      tags: [],
-      startDate: moment()
+      tags: []
     }
   }
 
@@ -67,6 +68,7 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
             </FormGroup>
             <FormGroup>
               <Label for="dateNeeded">Date Needed (Optional)</Label>
+              <DayPicker />
             </FormGroup>
             <FormGroup>
               <Label for="technologies">Technologies</Label>
