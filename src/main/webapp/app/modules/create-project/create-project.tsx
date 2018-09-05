@@ -22,20 +22,454 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
     this.state = {
       tags: []
     }
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.getSession();
   }
 
-  handleTagChange(tags) {
-    this.setState({tags})
-  }
 
-  handleDateChange(date) {
-    this.setState({
-      startDate: date
-    });
+  // json() {
+  //   this.data = {
+  //     "admins": [
+  //     {
+  //       "account": {
+  //         "activated": true,
+  //         "email": "string",
+  //         "firstName": "string",
+  //         "id": 0,
+  //         "imageUrl": "string",
+  //         "langKey": "string",
+  //         "lastName": "string",
+  //         "login": "string",
+  //         "resetDate": "2018-09-05T14:38:27.331Z"
+  //       },
+  //       "avatar": "string",
+  //       "avatarContentType": "string",
+  //       "creates": [
+  //         {}
+  //       ],
+  //       "id": 0,
+  //       "makes": [
+  //         {
+  //           "createdAt": "2018-09-05T14:38:27.331Z",
+  //           "id": 0,
+  //           "issue": {
+  //             "comments": [
+  //               {}
+  //             ],
+  //             "createdBy": {},
+  //             "fullDescription": "string",
+  //             "id": 0,
+  //             "interest": 0,
+  //             "projects": [
+  //               {}
+  //             ],
+  //             "rewards": 0,
+  //             "summary": "string"
+  //           },
+  //           "madeBy": {},
+  //           "project": {},
+  //           "text": "string"
+  //         }
+  //       ],
+  //       "raises": [
+  //         {
+  //           "comments": [
+  //             {
+  //               "createdAt": "2018-09-05T14:38:27.331Z",
+  //               "id": 0,
+  //               "issue": {},
+  //               "madeBy": {},
+  //               "project": {},
+  //               "text": "string"
+  //             }
+  //           ],
+  //           "createdBy": {},
+  //           "fullDescription": "string",
+  //           "id": 0,
+  //           "interest": 0,
+  //           "projects": [
+  //             {}
+  //           ],
+  //           "rewards": 0,
+  //           "summary": "string"
+  //         }
+  //       ],
+  //       "role": "string",
+  //       "skills": [
+  //         {
+  //           "id": 0,
+  //           "word": "string"
+  //         }
+  //       ]
+  //     }
+  //   ],
+  //     "attachment": "string",
+  //     "attachmentContentType": "string",
+  //     "comments": [
+  //     {
+  //       "createdAt": "2018-09-05T14:38:27.331Z",
+  //       "id": 0,
+  //       "issue": {
+  //         "comments": [
+  //           {}
+  //         ],
+  //         "createdBy": {
+  //           "account": {
+  //             "activated": true,
+  //             "email": "string",
+  //             "firstName": "string",
+  //             "id": 0,
+  //             "imageUrl": "string",
+  //             "langKey": "string",
+  //             "lastName": "string",
+  //             "login": "string",
+  //             "resetDate": "2018-09-05T14:38:27.331Z"
+  //           },
+  //           "avatar": "string",
+  //           "avatarContentType": "string",
+  //           "creates": [
+  //             {}
+  //           ],
+  //           "id": 0,
+  //           "makes": [
+  //             {}
+  //           ],
+  //           "raises": [
+  //             {}
+  //           ],
+  //           "role": "string",
+  //           "skills": [
+  //             {
+  //               "id": 0,
+  //               "word": "string"
+  //             }
+  //           ]
+  //         },
+  //         "fullDescription": "string",
+  //         "id": 0,
+  //         "interest": 0,
+  //         "projects": [
+  //           {}
+  //         ],
+  //         "rewards": 0,
+  //         "summary": "string"
+  //       },
+  //       "madeBy": {
+  //         "account": {
+  //           "activated": true,
+  //           "email": "string",
+  //           "firstName": "string",
+  //           "id": 0,
+  //           "imageUrl": "string",
+  //           "langKey": "string",
+  //           "lastName": "string",
+  //           "login": "string",
+  //           "resetDate": "2018-09-05T14:38:27.332Z"
+  //         },
+  //         "avatar": "string",
+  //         "avatarContentType": "string",
+  //         "creates": [
+  //           {}
+  //         ],
+  //         "id": 0,
+  //         "makes": [
+  //           {}
+  //         ],
+  //         "raises": [
+  //           {
+  //             "comments": [
+  //               {}
+  //             ],
+  //             "createdBy": {},
+  //             "fullDescription": "string",
+  //             "id": 0,
+  //             "interest": 0,
+  //             "projects": [
+  //               {}
+  //             ],
+  //             "rewards": 0,
+  //             "summary": "string"
+  //           }
+  //         ],
+  //         "role": "string",
+  //         "skills": [
+  //           {
+  //             "id": 0,
+  //             "word": "string"
+  //           }
+  //         ]
+  //       },
+  //       "project": {},
+  //       "text": "string"
+  //     }
+  //   ],
+  //     "contributors": [
+  //     {
+  //       "account": {
+  //         "activated": true,
+  //         "email": "string",
+  //         "firstName": "string",
+  //         "id": 0,
+  //         "imageUrl": "string",
+  //         "langKey": "string",
+  //         "lastName": "string",
+  //         "login": "string",
+  //         "resetDate": "2018-09-05T14:38:27.332Z"
+  //       },
+  //       "avatar": "string",
+  //       "avatarContentType": "string",
+  //       "creates": [
+  //         {}
+  //       ],
+  //       "id": 0,
+  //       "makes": [
+  //         {
+  //           "createdAt": "2018-09-05T14:38:27.332Z",
+  //           "id": 0,
+  //           "issue": {
+  //             "comments": [
+  //               {}
+  //             ],
+  //             "createdBy": {},
+  //             "fullDescription": "string",
+  //             "id": 0,
+  //             "interest": 0,
+  //             "projects": [
+  //               {}
+  //             ],
+  //             "rewards": 0,
+  //             "summary": "string"
+  //           },
+  //           "madeBy": {},
+  //           "project": {},
+  //           "text": "string"
+  //         }
+  //       ],
+  //       "raises": [
+  //         {
+  //           "comments": [
+  //             {
+  //               "createdAt": "2018-09-05T14:38:27.332Z",
+  //               "id": 0,
+  //               "issue": {},
+  //               "madeBy": {},
+  //               "project": {},
+  //               "text": "string"
+  //             }
+  //           ],
+  //           "createdBy": {},
+  //           "fullDescription": "string",
+  //           "id": 0,
+  //           "interest": 0,
+  //           "projects": [
+  //             {}
+  //           ],
+  //           "rewards": 0,
+  //           "summary": "string"
+  //         }
+  //       ],
+  //       "role": "string",
+  //       "skills": [
+  //         {
+  //           "id": 0,
+  //           "word": "string"
+  //         }
+  //       ]
+  //     }
+  //   ],
+  //     "createdAt": "2018-09-05T14:38:27.332Z",
+  //     "createdBy": {
+  //     "account": {
+  //       "activated": true,
+  //         "email": "string",
+  //         "firstName": "string",
+  //         "id": 0,
+  //         "imageUrl": "string",
+  //         "langKey": "string",
+  //         "lastName": "string",
+  //         "login": "string",
+  //         "resetDate": "2018-09-05T14:38:27.332Z"
+  //     },
+  //     "avatar": "string",
+  //       "avatarContentType": "string",
+  //       "creates": [
+  //       {}
+  //     ],
+  //       "id": 0,
+  //       "makes": [
+  //       {
+  //         "createdAt": "2018-09-05T14:38:27.332Z",
+  //         "id": 0,
+  //         "issue": {
+  //           "comments": [
+  //             {}
+  //           ],
+  //           "createdBy": {},
+  //           "fullDescription": "string",
+  //           "id": 0,
+  //           "interest": 0,
+  //           "projects": [
+  //             {}
+  //           ],
+  //           "rewards": 0,
+  //           "summary": "string"
+  //         },
+  //         "madeBy": {},
+  //         "project": {},
+  //         "text": "string"
+  //       }
+  //     ],
+  //       "raises": [
+  //       {
+  //         "comments": [
+  //           {
+  //             "createdAt": "2018-09-05T14:38:27.332Z",
+  //             "id": 0,
+  //             "issue": {},
+  //             "madeBy": {},
+  //             "project": {},
+  //             "text": "string"
+  //           }
+  //         ],
+  //         "createdBy": {},
+  //         "fullDescription": "string",
+  //         "id": 0,
+  //         "interest": 0,
+  //         "projects": [
+  //           {}
+  //         ],
+  //         "rewards": 0,
+  //         "summary": "string"
+  //       }
+  //     ],
+  //       "role": "string",
+  //       "skills": [
+  //       {
+  //         "id": 0,
+  //         "word": "string"
+  //       }
+  //     ]
+  //   },
+  //     "description": "string",
+  //     "dueDate": "2018-09-05T14:38:27.332Z",
+  //     "id": 0,
+  //     "interest": 0,
+  //     "issue": {
+  //     "comments": [
+  //       {
+  //         "createdAt": "2018-09-05T14:38:27.332Z",
+  //         "id": 0,
+  //         "issue": {},
+  //         "madeBy": {
+  //           "account": {
+  //             "activated": true,
+  //             "email": "string",
+  //             "firstName": "string",
+  //             "id": 0,
+  //             "imageUrl": "string",
+  //             "langKey": "string",
+  //             "lastName": "string",
+  //             "login": "string",
+  //             "resetDate": "2018-09-05T14:38:27.332Z"
+  //           },
+  //           "avatar": "string",
+  //           "avatarContentType": "string",
+  //           "creates": [
+  //             {}
+  //           ],
+  //           "id": 0,
+  //           "makes": [
+  //             {}
+  //           ],
+  //           "raises": [
+  //             {}
+  //           ],
+  //           "role": "string",
+  //           "skills": [
+  //             {
+  //               "id": 0,
+  //               "word": "string"
+  //             }
+  //           ]
+  //         },
+  //         "project": {},
+  //         "text": "string"
+  //       }
+  //     ],
+  //       "createdBy": {
+  //       "account": {
+  //         "activated": true,
+  //           "email": "string",
+  //           "firstName": "string",
+  //           "id": 0,
+  //           "imageUrl": "string",
+  //           "langKey": "string",
+  //           "lastName": "string",
+  //           "login": "string",
+  //           "resetDate": "2018-09-05T14:38:27.332Z"
+  //       },
+  //       "avatar": "string",
+  //         "avatarContentType": "string",
+  //         "creates": [
+  //         {}
+  //       ],
+  //         "id": 0,
+  //         "makes": [
+  //         {
+  //           "createdAt": "2018-09-05T14:38:27.332Z",
+  //           "id": 0,
+  //           "issue": {},
+  //           "madeBy": {},
+  //           "project": {},
+  //           "text": "string"
+  //         }
+  //       ],
+  //         "raises": [
+  //         {}
+  //       ],
+  //         "role": "string",
+  //         "skills": [
+  //         {
+  //           "id": 0,
+  //           "word": "string"
+  //         }
+  //       ]
+  //     },
+  //     "fullDescription": "string",
+  //       "id": 0,
+  //       "interest": 0,
+  //       "projects": [
+  //       {}
+  //     ],
+  //       "rewards": 0,
+  //       "summary": "string"
+  //   },
+  //     "issueTrackerUri": "string",
+  //     "logo": "string",
+  //     "logoContentType": "string",
+  //     "name": "string",
+  //     "repo": {
+  //     "id": 0,
+  //       "uri": "string"
+  //   },
+  //     "status": "DRAFT",
+  //     "technologies": [
+  //     {
+  //       "id": 0,
+  //       "word": "string"
+  //     }
+  //   ]
+  //   }
+  // }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    console.log(data.get("projectName"));
   }
 
   render() {
@@ -47,7 +481,7 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
 
           <hr/>
 
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Label for="projectName">Project Name</Label>
               <Input type="projectName" name="projectName" id="projectName" placeholder="your project name" />
@@ -57,7 +491,6 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
               <Label for="sector">Business Sector</Label>
               <Input type="sector" name="sector" id="sector" placeholder="e.g. FXIP" />
             </FormGroup>
-
 
             <FormGroup>
               <Label for="projectDescription">Project Description</Label>
@@ -81,7 +514,7 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
               <Input type="gitRepo" name="gitRepo" id="gitRepo" placeholder="add users you want added to the project" />
             </FormGroup>
 
-            <Button>Submit</Button>
+            <Button type="submit" >Submit</Button>
           </Form>
         </Container>
       </div>
@@ -103,3 +536,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(CreateProject);
+
