@@ -255,3 +255,7 @@ ui bootstrap tweaks
 .projects-container {
   padding: 2% 5%;
 }
+
+.search-project-container {
+  padding-top: 10px;
+}

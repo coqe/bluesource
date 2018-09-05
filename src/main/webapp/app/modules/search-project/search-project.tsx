@@ -27,12 +27,13 @@ export class SearchProject extends React.Component<ISearchProjectProp> {
   render() {
     const { account } = this.props;
     return (
-      <CardColumns>
+
+      <CardColumns className="search-project-container">
         <Card>
         <CardBody>
           <CardTitle>Card title</CardTitle>
           <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</CardText>
+          <CardText>This is a wider card with supporting text bsdlflsdfljdsklfjlksdjflkjsdlkfjlksdjflkjlksdfjlsdjfljsdklfjlksdjfkjsdlkfjlsdjflkjsdfelow as a natural lead-in to additional content. This content is a little bit longer.</CardText>
           <Button>Button</Button>
         </CardBody>
       </Card>
