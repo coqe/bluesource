@@ -1,0 +1,54 @@
+entity Project {
+    name String required,
+    createdAt ZonedDateTime,
+    description String,
+    logo ImageBlob,
+    status String,
+    issueTrackerUri String,
+    attachment AnyBlob
+}
+
+entity Comment {
+    text String,
+    createdAt ZonedDateTime   
+}
+
+entity Keyword {
+	word String
+}
+
+entity Repo {
+    uri String
+}
+
+entity UserProfile {
+	role String,
+    avatar ImageBlob
+}
+
+entity Skill {
+	name String
+}
+
+relationship OneToOne {
+    Project to Repo,
+    UserProfile{account(login)} to User{profile}
+}
+
+relationship OneToMany {
+	Project{createdBy} to UserProfile{created}
+    Project{comment} to Comment{project}
+}
+
+relationship ManyToMany {
+	Project{technologies} to Keyword{project},
+    Project{contributor} to UserProfile{project},
+    Project{admins} to UserProfile{administrator},
+    UserProfile{skill} to Skill{user}
+}
+
+// Set pagination options
+paginate Project with infinite-scroll
+
+service all with serviceImpl
+

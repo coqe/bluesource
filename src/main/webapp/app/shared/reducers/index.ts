@@ -11,6 +11,30 @@ import activate, { ActivateState } from 'app/modules/account/activate/activate.r
 import password, { PasswordState } from 'app/modules/account/password/password.reducer';
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
+// prettier-ignore
+import project, {
+  ProjectState
+} from 'app/entities/project/project.reducer';
+// prettier-ignore
+import comment, {
+  CommentState
+} from 'app/entities/comment/comment.reducer';
+// prettier-ignore
+import keyword, {
+  KeywordState
+} from 'app/entities/keyword/keyword.reducer';
+// prettier-ignore
+import repo, {
+  RepoState
+} from 'app/entities/repo/repo.reducer';
+// prettier-ignore
+import userProfile, {
+  UserProfileState
+} from 'app/entities/user-profile/user-profile.reducer';
+// prettier-ignore
+import skill, {
+  SkillState
+} from 'app/entities/skill/skill.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -23,6 +47,12 @@ export interface IRootState {
   readonly passwordReset: PasswordResetState;
   readonly password: PasswordState;
   readonly settings: SettingsState;
+  readonly project: ProjectState;
+  readonly comment: CommentState;
+  readonly keyword: KeywordState;
+  readonly repo: RepoState;
+  readonly userProfile: UserProfileState;
+  readonly skill: SkillState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -37,6 +67,12 @@ const rootReducer = combineReducers<IRootState>({
   passwordReset,
   password,
   settings,
+  project,
+  comment,
+  keyword,
+  repo,
+  userProfile,
+  skill,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

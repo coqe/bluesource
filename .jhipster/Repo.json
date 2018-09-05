@@ -1,0 +1,27 @@
+{
+    "name": "Repo",
+    "fields": [
+        {
+            "fieldName": "uri",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "project",
+            "otherEntityName": "project",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "repo"
+        }
+    ],
+    "changelogDate": "20180905112310",
+    "entityTableName": "repo",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

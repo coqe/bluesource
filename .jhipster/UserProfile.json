@@ -1,0 +1,61 @@
+{
+    "name": "UserProfile",
+    "fields": [
+        {
+            "fieldName": "role",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "avatar",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "account",
+            "otherEntityName": "user",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "profile"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "user",
+            "relationshipName": "skill",
+            "otherEntityName": "skill",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "created",
+            "otherEntityName": "project",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "project",
+            "otherEntityName": "project",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "contributor"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "administrator",
+            "otherEntityName": "project",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "admins"
+        }
+    ],
+    "changelogDate": "20180905112311",
+    "entityTableName": "user_profile",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

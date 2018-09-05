@@ -1,0 +1,27 @@
+{
+    "name": "Keyword",
+    "fields": [
+        {
+            "fieldName": "word",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "project",
+            "otherEntityName": "project",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "technologies"
+        }
+    ],
+    "changelogDate": "20180905112309",
+    "entityTableName": "keyword",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
