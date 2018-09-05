@@ -47,7 +47,7 @@ Generic styles
 /* other generic styles */
 
 .jh-card {
-  padding: 1.5%;
+  padding: 0% 1.5%;
   margin-top: 20px;
   border: none;
 }
@@ -230,3 +230,78 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-css-add-main JHipster will add new css style */
+
+/* custom */
+.padded-container {
+  margin-top: 50px;
+  padding-top: 0px;
+  margin: 0;
+  padding: 0;
+}
+.navbar span {
+  color: #006fcf;
+  font-family: Helvetica Neue, Roboto, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.home-banner {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(#2c5ea2, #2e70c8);
+  padding: 5% 10%;
+  margin: 0;
+  color: white;
+}
+
+.projects-container {
+  padding: 2% 5%;
+}
+
+.login-container {
+  /*padding-top:50px;!**!*/
+  width:40%;
+  background:#F7F8F9;
+  padding:20px;
+  color:#2E2E2E;
+  margin-top:30px;
+  float: left;
+}
+
+.login-option {
+  padding:10px 0px;
+}
+.login-options, .login-options a{
+  color: #006fcf;
+  /*font-family: Helvetica Neue, Roboto, Helvetica, sans-serif;*/
+  -webkit-font-smoothing: antialiased;
+}
+.login-button {
+  width:100%;
+  margin-top:30px;
+  height:50px;
+  display: flex;
+}
+.banner-image {
+  float:left;
+  padding-left:100px;
+  height:500px;
+}
+
+.banner-container {
+  display: flex;
+}
+
+.search-project-container {
+  padding-top: 10px;
+}
+.card-image {
+  height:100px;
+}
+.card-participants {
+}
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
