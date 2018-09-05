@@ -5,7 +5,7 @@ import { AvForm, AvField, AvGroup, AvInput } from 'availity-reactstrap-validatio
 import { Link } from 'react-router-dom';
 
 export interface ILoginModalProps {
-  showModal: boolean;
+  // showModal: boolean;
   loginError: boolean;
   handleLogin: Function;
   handleClose: Function;
@@ -21,12 +21,8 @@ class LoginModal extends React.Component<ILoginModalProps> {
     const { loginError, handleClose } = this.props;
 
     return (
-      <Modal isOpen={this.props.showModal} toggle={handleClose} backdrop="static" id="login-page" autoFocus={false}>
-        <AvForm onSubmit={this.handleSubmit}>
-          <ModalHeader id="login-title" toggle={handleClose}>
-            Sign in
-          </ModalHeader>
-          <ModalBody>
+      <div className="login-container">
+      <AvForm onSubmit={this.handleSubmit}>
             <Row>
               <Col md="12">
                 {loginError ? (
@@ -59,24 +55,17 @@ class LoginModal extends React.Component<ILoginModalProps> {
                 </AvGroup>
               </Col>
             </Row>
-            <div className="mt-1">&nbsp;</div>
-            <Alert color="warning">
-              <Link to="/reset/request">Did you forget your password?</Link>
-            </Alert>
-            <Alert color="warning">
-              <span>You don't have an account yet?</span> <Link to="/register">Register a new account</Link>
-            </Alert>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={handleClose} tabIndex="1">
-              Cancel
-            </Button>{' '}
-            <Button color="primary" type="submit">
+            <Button className="login-button" color="primary" type="submit">
               Sign in
             </Button>
-          </ModalFooter>
+            <div className="mt-1">&nbsp;</div>
+            <div className="login-options">
+              <div className="login-option"><Link to="/reset/request">Did you forget your password?</Link></div>
+              <div className="login-option"><span>You don't have an account yet?</span> <Link to="/register">Register a new account</Link></div>
+            </div>
+
         </AvForm>
-      </Modal>
+      </div>
     );
   }
 }
