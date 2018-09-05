@@ -27,5 +27,25 @@
                   file="config/liquibase/projects.csv"
                   separator=";"
                   tableName="project"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/user_profile_skills.csv"
+                  separator=";"
+                  tableName="user_profile_skill"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/project_technologies.csv"
+                  separator=";"
+                  tableName="project_technologies"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/project_contributors.csv"
+                  separator=";"
+                  tableName="project_contributor"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/project_admins.csv"
+                  separator=";"
+                  tableName="project_admin"/>
     </changeSet>
 </databaseChangeLog>
