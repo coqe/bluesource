@@ -34,7 +34,9 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
           handleClose={this.handleClose}
           loginError={this.props.loginError}
         />
-        <img src="content/images/worldmap.png" className="banner-image" alt="Logo" />
+        <div className="banner-image-container">
+          <img src="content/images/worldmapannotated.png" className="banner-image" alt="Logo" />
+        </div>
       </div>
     </div>
   );

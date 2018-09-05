@@ -262,7 +262,6 @@ ui bootstrap tweaks
   background:#F7F8F9;
   padding:20px;
   color:#2E2E2E;
-  margin-top:30px;
   float: left;
 }
 
@@ -280,15 +279,26 @@ ui bootstrap tweaks
   height:50px;
   display: flex;
 }
-.banner-image {
-  width:80%;
-  padding-left:100px;
-  height:auto;
-  /*height:500px;*/
-}
 
 .banner-container {
-  display: flex;
+  display: inline-block;
+  width: 100%;
+  position:relative;
+  margin-top:1em;
+}
+
+.banner-image-container {
+  height: 100%;
+  width: 70%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding-top:1em;
+}
+
+.banner-image {
+  width: 100%;
+  max-height: 100%;
 }
 
 .search-project-container {
@@ -330,15 +340,4 @@ ui bootstrap tweaks
 .project-explore-button {
   margin: 0 25%;
   width: 80%;
-}
-
-.header-logo-text {
-  color:#333;
-}
-
-.header-logo-text-container {
-  padding-top:.4em;
-  width:20%;
-  display:inline-block;
-  margin-right: 1em;
 }

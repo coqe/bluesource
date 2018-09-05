@@ -50,9 +50,9 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
         <LoadingBar className="loading-bar" />
         <Navbar dark expand="sm" fixed="top" className="jh-navbar">
           <NavbarToggler aria-label="Menu" onClick={this.toggleMenu} />
-          <Brand />
 
           <div className="header-logo-text-container">
+            <Brand />
             <h2 className="header-logo-text">Blue Source</h2>
           </div>
 

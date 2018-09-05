@@ -84,8 +84,6 @@ export class Home extends React.Component<IHomeProp> {
     return (
       <Row className="projects-container">
         <div>
-          {/*{ console.log("data loaded") }*/}
-          {/*{ console.log(this.props.projectList)}*/}
 
           <h4>Welcome back {this.props.account.firstName}!</h4>
           <h5>{this.props.profile.role}</h5>

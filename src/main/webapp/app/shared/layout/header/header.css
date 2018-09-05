@@ -101,3 +101,21 @@ Navbar styles
   top: 0px;
   z-index: 1031;
 }
+
+/*custom*/
+
+.header-logo-text {
+  color:#333;
+  margin-top:.25em;
+}
+
+.header-logo-text-container {
+  width:40%;
+  display:inline-block;
+  margin-right: 1em;
+}
+
+.brand-logo, .header-logo-text {
+  float:left
+}
+
