@@ -29,15 +29,15 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="made_by_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="project_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <column name="issue_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="made_by_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

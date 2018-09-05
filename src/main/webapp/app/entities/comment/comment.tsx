@@ -77,9 +77,9 @@ export class Comment extends React.Component<ICommentProps, ICommentState> {
                 <th>ID</th>
                 <th>Text</th>
                 <th>Created At</th>
-                <th>Made By</th>
                 <th>Project</th>
                 <th>Issue</th>
+                <th>Made By</th>
                 <th />
               </tr>
             </thead>
@@ -95,9 +95,9 @@ export class Comment extends React.Component<ICommentProps, ICommentState> {
                   <td>
                     <TextFormat type="date" value={comment.createdAt} format={APP_DATE_FORMAT} />
                   </td>
-                  <td>{comment.madeBy ? <Link to={`user-profile/${comment.madeBy.id}`}>{comment.madeBy.id}</Link> : ''}</td>
                   <td>{comment.project ? <Link to={`project/${comment.project.id}`}>{comment.project.name}</Link> : ''}</td>
                   <td>{comment.issue ? <Link to={`issue/${comment.issue.id}`}>{comment.issue.summary}</Link> : ''}</td>
+                  <td>{comment.madeBy ? <Link to={`user-profile/${comment.madeBy.id}`}>{comment.madeBy.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${comment.id}`} color="info" size="sm">
