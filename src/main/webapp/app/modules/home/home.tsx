@@ -25,7 +25,8 @@ export class Home extends React.Component<IHomeProp> {
 
   componentDidMount() {
     this.props.getSession();
-    this.props.getEntities()
+    this.props.getEntities();
+    console.log(this.props.account);
   }
 
   languages = () => (
@@ -42,15 +43,25 @@ export class Home extends React.Component<IHomeProp> {
       <Badge color="info" pill>Dashboard</Badge>
     </div>
   );
-  cardParticipants = () => (
-    <div className="card-participants">
-      <span className="dot"></span>
-      <span className="dot"></span>
-      <span className="dot"></span>
-      <span className="dot"></span>
-      <span className="dot"><p>+100</p></span>
-    </div>
-  )
+
+  cardParticipants = (contributors) => {
+    if (contributors != null) {
+      return (
+        <div className="card-participants">
+          { contributors.map( (contributor, i) => {
+            <span className="dot">{contributor}</span>
+          })}
+          <span className="dot"><p>+100</p></span>
+        </div>
+      )
+    } else {
+      return (
+        <div className="card-participants">
+          <span className="dot"><p>1</p></span>
+        </div>
+      )
+    }
+  };
 
   render() {
     const { isAuthenticated } = this.props;
@@ -75,48 +86,48 @@ export class Home extends React.Component<IHomeProp> {
             <Progress bar color="success" value="60">React</Progress>
             <Progress bar color="info" value="15">Play</Progress>
           </Progress>
-
           <hr />
 
           <h4>Current Projects</h4>
-          <h5>10 Results</h5>
-
           <CardColumns className="projects-current-container">
-            <Card>
-              <CardBody>
-                <CardTitle>Card title</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                {this.languages()}
-                {this.technologies()}
-                {this.cardParticipants()}
-                <CardText>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</CardText>
-                <Button className="project-explore-button">Explore</Button>
-              </CardBody>
-            </Card>
-
-
-            {/*<Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>*/}
-              {/*<CardTitle>Special Title Treatment</CardTitle>*/}
-              {/*<CardText>With supporting text below as a natural lead-in to additional content.</CardText>*/}
-              {/*<Button>Button</Button>*/}
-            {/*</Card>*/}
           </CardColumns>
+
+          <hr />
+
+          <h4>Latest Projects</h4>
+          <h5>{this.props.projectList.length} Result(s)</h5>
+
+          { this.props.projectList.map( (project, i) => (
+              <CardColumns className="projects-current-container">
+                <Card>
+                  <CardBody>
+                    <CardTitle>{project.name}</CardTitle>
+                    <CardSubtitle>Card subtitle</CardSubtitle>
+                    {this.technologies()}
+                    {this.cardParticipants(project.contributors)}
+                    <CardText>{project.description}</CardText>
+                    <Button className="project-explore-button">Explore</Button>
+                  </CardBody>
+                </Card>
+              </CardColumns>
+            ))
+          }
 
           <hr />
 
           <h4>Recommended Projects</h4>
           <CardColumns className="projects-current-container">
-            <Card>
-              <CardBody>
-                <CardTitle>Card title</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                {this.languages()}
-                {this.technologies()}
-                {this.cardParticipants()}
-                <CardText>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</CardText>
-                <Button className="project-explore-button">Explore</Button>
-              </CardBody>
-            </Card>
+            {/*<Card>*/}
+              {/*<CardBody>*/}
+                {/*<CardTitle>Card title</CardTitle>*/}
+                {/*<CardSubtitle>Card subtitle</CardSubtitle>*/}
+                {/*{this.languages()}*/}
+                {/*{this.technologies()}*/}
+                {/*{this.cardParticipants()}*/}
+                {/*<CardText>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</CardText>*/}
+                {/*<Button className="project-explore-button">Explore</Button>*/}
+              {/*</CardBody>*/}
+            {/*</Card>*/}
 
             {/*<Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }}>*/}
             {/*<CardTitle>Special Title Treatment</CardTitle>*/}
