@@ -110,7 +110,7 @@ Navbar styles
 }
 
 .header-logo-text-container {
-  width:40%;
+  /*width:40%;*/
   display:inline-block;
   margin-right: 1em;
 }
@@ -119,3 +119,7 @@ Navbar styles
   float:left
 }
 
+.header-search-bar {
+  display: inline-block;
+  width: 20%;
+}

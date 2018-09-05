@@ -331,6 +331,9 @@ ui bootstrap tweaks
   overflow:auto;
 }
 
+.projects-container-inner {
+  width:100%;
+}
 .projects-current-container {
   max-height:400px;
   width:100%;
@@ -338,6 +341,6 @@ ui bootstrap tweaks
 }
 
 .project-explore-button {
+  width: 50%;
   margin: 0 25%;
-  width: 80%;
 }

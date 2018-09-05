@@ -56,7 +56,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
             <h2 className="header-logo-text">Blue Source</h2>
           </div>
 
-          <Input placeholder="search for a project" />
+          <Input placeholder="search for a project" className="header-search-bar"/>
 
           <Collapse isOpen={this.state.menuOpen} navbar>
             <Nav id="header-tabs" className="ml-auto" navbar>
