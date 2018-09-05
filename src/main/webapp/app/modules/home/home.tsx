@@ -8,22 +8,26 @@ import { Row, Col, Alert, Input, Table, Form, FormGroup, FormText, Label, Badge,
 
 import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
+import { getSearchEntities, getEntities, reset } from 'app/entities/project/project.reducer';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
 export class Home extends React.Component<IHomeProp> {
-  componentDidMount() {
-    this.props.getSession();
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentProjects: [],
+      recommendedProjects: []
+    };
   }
 
-  cardParticipants = () => {
-    <div className="card-participants">
-      <span className="dot"></span>
-      <span className="dot"></span>
-      <span className="dot"></span>
-      <span className="dot"></span>
-    </div>
+  componentDidMount() {
+    this.props.getSession();
+    this.props.getEntities()
   }
+
   languages = () => (
     <Progress className="card-languages" multi>
       <Progress bar value="50">Java</Progress>
@@ -56,7 +60,8 @@ export class Home extends React.Component<IHomeProp> {
     return (
       <Row className="projects-container">
         <div>
-
+          { console.log("data loaded") }
+          { console.log(this.props.projectList)}
           <hr />
           <h4>Our Ecosystem</h4>
           <Progress className="card-languages" multi>
@@ -128,10 +133,15 @@ export class Home extends React.Component<IHomeProp> {
 
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
-  isAuthenticated: storeState.authentication.isAuthenticated
+  isAuthenticated: storeState.authentication.isAuthenticated,
+  projectList: storeState.project.entities
 });
 
-const mapDispatchToProps = { getSession };
+const mapDispatchToProps = {
+  getSession,
+  getSearchEntities,
+  getEntities
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
