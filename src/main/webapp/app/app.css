@@ -289,3 +289,7 @@ ui bootstrap tweaks
 .banner-container {
   display: flex;
 }
+
+.search-project-container {
+  padding-top: 10px;
+}

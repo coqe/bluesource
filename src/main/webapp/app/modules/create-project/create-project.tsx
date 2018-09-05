@@ -4,13 +4,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { Row, Col, Alert, Input, Table, Form, FormGroup, FormText, Label, Button } from 'reactstrap';
+import { Row, Col, Alert, Input, Table, Form, FormGroup, FormText, Label, Button, Container } from 'reactstrap';
 
-import TagsInput from 'react-tagsinput'
 import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
 
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -33,11 +30,11 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
     this.props.getSession();
   }
 
-  handleChange(tags) {
+  handleTagChange(tags) {
     this.setState({tags})
   }
 
-  handleChange(date) {
+  handleDateChange(date) {
     this.setState({
       startDate: date
     });
@@ -46,9 +43,8 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
   render() {
     const { account } = this.props;
     return (
-      <Row>
-        <div>
-
+      <div>
+        <Container>
           <h4>Create a Project</h4>
 
           <hr/>
@@ -60,19 +56,21 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
             </FormGroup>
 
             <FormGroup>
+              <Label for="sector">Business Sector</Label>
+              <Input type="sector" name="sector" id="sector" placeholder="e.g. FXIP" />
+            </FormGroup>
+
+
+            <FormGroup>
               <Label for="projectDescription">Project Description</Label>
               <Input type="textarea" name="text" id="exampleText" />
             </FormGroup>
             <FormGroup>
               <Label for="dateNeeded">Date Needed (Optional)</Label>
-              <DatePicker
-                selected={this.state.startDate}
-                onChange={this.handleChange}
-              />
             </FormGroup>
             <FormGroup>
               <Label for="technologies">Technologies</Label>
-              <TagsInput value={this.state.tags} onChange={this.handleChange} />
+              <Input type="text" name="text" id="exampleText" />
             </FormGroup>
 
             <FormGroup>
@@ -87,9 +85,8 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
 
             <Button>Submit</Button>
           </Form>
-
-        </div>
-      </Row>
+        </Container>
+      </div>
     );
   }
 }
