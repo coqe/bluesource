@@ -5,19 +5,19 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ISkill } from 'app/shared/model/skill.model';
+import { IIssue } from 'app/shared/model/issue.model';
 import { IRootState } from 'app/shared/reducers';
-import { getEntity, deleteEntity } from './skill.reducer';
+import { getEntity, deleteEntity } from './issue.reducer';
 
-export interface ISkillDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IIssueDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
-export class SkillDeleteDialog extends React.Component<ISkillDeleteDialogProps> {
+export class IssueDeleteDialog extends React.Component<IIssueDeleteDialogProps> {
   componentDidMount() {
     this.props.getEntity(this.props.match.params.id);
   }
 
   confirmDelete = event => {
-    this.props.deleteEntity(this.props.skillEntity.id);
+    this.props.deleteEntity(this.props.issueEntity.id);
     this.handleClose(event);
   };
 
@@ -27,11 +27,11 @@ export class SkillDeleteDialog extends React.Component<ISkillDeleteDialogProps> 
   };
 
   render() {
-    const { skillEntity } = this.props;
+    const { issueEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this Skill?</ModalBody>
+        <ModalBody>Are you sure you want to delete this Issue?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
@@ -45,8 +45,8 @@ export class SkillDeleteDialog extends React.Component<ISkillDeleteDialogProps> 
   }
 }
 
-const mapStateToProps = ({ skill }: IRootState) => ({
-  skillEntity: skill.entity
+const mapStateToProps = ({ issue }: IRootState) => ({
+  issueEntity: issue.entity
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };
@@ -57,4 +57,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SkillDeleteDialog);
+)(IssueDeleteDialog);

@@ -1,24 +1,38 @@
+enum Status {
+	DRAFT, OPEN, CLOSED, ATTIC
+}
+
 entity Project {
     name String required,
-    createdAt ZonedDateTime,
+    createdAt ZonedDateTime required,
+    dueDate ZonedDateTime,
     description String,
     logo ImageBlob,
-    status String,
+    interest Integer,
+    
+    status Status,
     issueTrackerUri String,
     attachment AnyBlob
 }
 
+entity Issue {
+    summary String,
+    fullDescription TextBlob,
+    interest Integer
+    rewards Integer min(0) max(1000)
+}
+
 entity Comment {
-    text String,
-    createdAt ZonedDateTime   
+    text String required,
+    createdAt ZonedDateTime required
 }
 
 entity Keyword {
-	word String
+	word String required
 }
 
 entity Repo {
-    uri String
+    uri String required
 }
 
 entity UserProfile {
@@ -26,25 +40,28 @@ entity UserProfile {
     avatar ImageBlob
 }
 
-entity Skill {
-	name String
-}
-
 relationship OneToOne {
-    Project to Repo,
+    Project{repo(uri)} to Repo{project(name)},
     UserProfile{account(login)} to User{profile}
 }
 
+relationship ManyToOne {
+	Project{createdBy} to UserProfile{create(name)},
+	Comment{madeBy} to UserProfile{make(name)},
+	Issue{createdBy} to UserProfile{raise(name)},
+    Project{issue(summary)} to Issue{project(name)}
+}
+
 relationship OneToMany {
-	Project{createdBy} to UserProfile{created}
-    Project{comment} to Comment{project}
+    Project{comment} to Comment{project(name)},
+    Issue{comment} to Comment{issue(summary)}
 }
 
 relationship ManyToMany {
-	Project{technologies} to Keyword{project},
-    Project{contributor} to UserProfile{project},
-    Project{admins} to UserProfile{administrator},
-    UserProfile{skill} to Skill{user}
+	Project{technologies(word)} to Keyword{project(name)},
+    Project{contributor} to UserProfile{project(name)},
+    Project{admin} to UserProfile{administer(name)},
+    UserProfile{skill(word)} to Keyword{user(name)}
 }
 
 // Set pagination options

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -46,7 +47,7 @@ public class KeywordResource {
      */
     @PostMapping("/keywords")
     @Timed
-    public ResponseEntity<Keyword> createKeyword(@RequestBody Keyword keyword) throws URISyntaxException {
+    public ResponseEntity<Keyword> createKeyword(@Valid @RequestBody Keyword keyword) throws URISyntaxException {
         log.debug("REST request to save Keyword : {}", keyword);
         if (keyword.getId() != null) {
             throw new BadRequestAlertException("A new keyword cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,7 +69,7 @@ public class KeywordResource {
      */
     @PutMapping("/keywords")
     @Timed
-    public ResponseEntity<Keyword> updateKeyword(@RequestBody Keyword keyword) throws URISyntaxException {
+    public ResponseEntity<Keyword> updateKeyword(@Valid @RequestBody Keyword keyword) throws URISyntaxException {
         log.debug("REST request to update Keyword : {}", keyword);
         if (keyword.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

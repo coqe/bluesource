@@ -23,13 +23,7 @@
                                  baseTableName="user_profile_skill"
                                  constraintName="fk_user_profile_skill_skills_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="skill"/>
+                                 referencedTableName="keyword"/>
         
-        <addForeignKeyConstraint baseColumnNames="created_id"
-                                 baseTableName="user_profile"
-                                 constraintName="fk_user_profile_created_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="project"/>
-
     </changeSet>
 </databaseChangeLog>

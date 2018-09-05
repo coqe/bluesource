@@ -1,13 +1,21 @@
 package com.coqe.bluesource.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
+
+import org.springframework.data.elasticsearch.annotations.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A Comment.
@@ -24,15 +32,25 @@ public class Comment implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "text")
+    @NotNull
+    @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name = "created_at")
+    @NotNull
+    @Column(name = "created_at", nullable = false)
     private ZonedDateTime createdAt;
+
+    @ManyToOne
+    @JsonIgnoreProperties("createds")
+    private UserProfile madeBy;
 
     @ManyToOne
     @JsonIgnoreProperties("comments")
     private Project project;
+
+    @ManyToOne
+    @JsonIgnoreProperties("comments")
+    private Issue issue;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -69,6 +87,19 @@ public class Comment implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public UserProfile getMadeBy() {
+        return madeBy;
+    }
+
+    public Comment madeBy(UserProfile userProfile) {
+        this.madeBy = userProfile;
+        return this;
+    }
+
+    public void setMadeBy(UserProfile userProfile) {
+        this.madeBy = userProfile;
+    }
+
     public Project getProject() {
         return project;
     }
@@ -80,6 +111,19 @@ public class Comment implements Serializable {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public Issue getIssue() {
+        return issue;
+    }
+
+    public Comment issue(Issue issue) {
+        this.issue = issue;
+        return this;
+    }
+
+    public void setIssue(Issue issue) {
+        this.issue = issue;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

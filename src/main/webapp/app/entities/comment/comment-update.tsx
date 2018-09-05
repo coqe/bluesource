@@ -8,8 +8,12 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IUserProfile } from 'app/shared/model/user-profile.model';
+import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
 import { IProject } from 'app/shared/model/project.model';
 import { getEntities as getProjects } from 'app/entities/project/project.reducer';
+import { IIssue } from 'app/shared/model/issue.model';
+import { getEntities as getIssues } from 'app/entities/issue/issue.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './comment.reducer';
 import { IComment } from 'app/shared/model/comment.model';
 // tslint:disable-next-line:no-unused-variable
@@ -20,14 +24,18 @@ export interface ICommentUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export interface ICommentUpdateState {
   isNew: boolean;
+  madeById: number;
   projectId: number;
+  issueId: number;
 }
 
 export class CommentUpdate extends React.Component<ICommentUpdateProps, ICommentUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      madeById: 0,
       projectId: 0,
+      issueId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -39,7 +47,9 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
       this.props.getEntity(this.props.match.params.id);
     }
 
+    this.props.getUserProfiles();
     this.props.getProjects();
+    this.props.getIssues();
   }
 
   saveEntity = (event, errors, values) => {
@@ -66,7 +76,7 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
   };
 
   render() {
-    const { commentEntity, projects, loading, updating } = this.props;
+    const { commentEntity, userProfiles, projects, issues, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -92,7 +102,14 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
                   <Label id="textLabel" for="text">
                     Text
                   </Label>
-                  <AvField id="comment-text" type="text" name="text" />
+                  <AvField
+                    id="comment-text"
+                    type="text"
+                    name="text"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="createdAtLabel" for="createdAt">
@@ -104,16 +121,45 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
                     className="form-control"
                     name="createdAt"
                     value={isNew ? null : convertDateTimeFromServer(this.props.commentEntity.createdAt)}
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="project.id">Project</Label>
+                  <Label for="madeBy.id">Made By</Label>
+                  <AvInput id="comment-madeBy" type="select" className="form-control" name="madeBy.id">
+                    <option value="" key="0" />
+                    {userProfiles
+                      ? userProfiles.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="project.name">Project</Label>
                   <AvInput id="comment-project" type="select" className="form-control" name="project.id">
                     <option value="" key="0" />
                     {projects
                       ? projects.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.name}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="issue.summary">Issue</Label>
+                  <AvInput id="comment-issue" type="select" className="form-control" name="issue.id">
+                    <option value="" key="0" />
+                    {issues
+                      ? issues.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.summary}
                           </option>
                         ))
                       : null}
@@ -137,14 +183,18 @@ export class CommentUpdate extends React.Component<ICommentUpdateProps, IComment
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  userProfiles: storeState.userProfile.entities,
   projects: storeState.project.entities,
+  issues: storeState.issue.entities,
   commentEntity: storeState.comment.entity,
   loading: storeState.comment.loading,
   updating: storeState.comment.updating
 });
 
 const mapDispatchToProps = {
+  getUserProfiles,
   getProjects,
+  getIssues,
   getEntity,
   updateEntity,
   createEntity,

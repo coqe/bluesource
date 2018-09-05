@@ -3,6 +3,7 @@ package com.coqe.bluesource.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
@@ -23,7 +24,8 @@ public class Repo implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "uri")
+    @NotNull
+    @Column(name = "uri", nullable = false)
     private String uri;
 
     @OneToOne(mappedBy = "repo")

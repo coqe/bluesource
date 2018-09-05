@@ -38,8 +38,12 @@ export class CommentDetail extends React.Component<ICommentDetailProps> {
             <dd>
               <TextFormat value={commentEntity.createdAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
+            <dt>Made By</dt>
+            <dd>{commentEntity.madeBy ? commentEntity.madeBy.id : ''}</dd>
             <dt>Project</dt>
-            <dd>{commentEntity.project ? commentEntity.project.id : ''}</dd>
+            <dd>{commentEntity.project ? commentEntity.project.name : ''}</dd>
+            <dt>Issue</dt>
+            <dd>{commentEntity.issue ? commentEntity.issue.summary : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/comment" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

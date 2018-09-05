@@ -34,10 +34,6 @@
             <column name="account_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_user_profile_account_id" />
             </column>
-            <column name="created_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         

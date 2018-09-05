@@ -10,8 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { ISkill } from 'app/shared/model/skill.model';
-import { getEntities as getSkills } from 'app/entities/skill/skill.reducer';
+import { IKeyword } from 'app/shared/model/keyword.model';
+import { getEntities as getKeywords } from 'app/entities/keyword/keyword.reducer';
 import { IProject } from 'app/shared/model/project.model';
 import { getEntities as getProjects } from 'app/entities/project/project.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './user-profile.reducer';
@@ -26,9 +26,9 @@ export interface IUserProfileUpdateState {
   isNew: boolean;
   idsskill: any[];
   accountId: number;
-  createdId: number;
+  createId: number;
   projectId: number;
-  administratorId: number;
+  administerId: number;
 }
 
 export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, IUserProfileUpdateState> {
@@ -37,9 +37,9 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
     this.state = {
       idsskill: [],
       accountId: 0,
-      createdId: 0,
+      createId: 0,
       projectId: 0,
-      administratorId: 0,
+      administerId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -52,7 +52,7 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
     }
 
     this.props.getUsers();
-    this.props.getSkills();
+    this.props.getKeywords();
     this.props.getProjects();
   }
 
@@ -87,7 +87,7 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
   };
 
   render() {
-    const { userProfileEntity, users, skills, projects, loading, updating } = this.props;
+    const { userProfileEntity, users, keywords, projects, loading, updating } = this.props;
     const { isNew } = this.state;
 
     const { avatar, avatarContentType } = userProfileEntity;
@@ -161,7 +161,7 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="skills">Skill</Label>
+                  <Label for="keywords">Skill</Label>
                   <AvInput
                     id="user-profile-skill"
                     type="select"
@@ -171,23 +171,10 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
                     value={userProfileEntity.skills && userProfileEntity.skills.map(e => e.id)}
                   >
                     <option value="" key="0" />
-                    {skills
-                      ? skills.map(otherEntity => (
+                    {keywords
+                      ? keywords.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="created.id">Created</Label>
-                  <AvInput id="user-profile-created" type="select" className="form-control" name="created.id">
-                    <option value="" key="0" />
-                    {projects
-                      ? projects.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.word}
                           </option>
                         ))
                       : null}
@@ -212,7 +199,7 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
 
 const mapStateToProps = (storeState: IRootState) => ({
   users: storeState.userManagement.users,
-  skills: storeState.skill.entities,
+  keywords: storeState.keyword.entities,
   projects: storeState.project.entities,
   userProfileEntity: storeState.userProfile.entity,
   loading: storeState.userProfile.loading,
@@ -221,7 +208,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getUsers,
-  getSkills,
+  getKeywords,
   getProjects,
   getEntity,
   updateEntity,

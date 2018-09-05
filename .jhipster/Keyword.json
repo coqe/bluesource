@@ -3,7 +3,10 @@
     "fields": [
         {
             "fieldName": "word",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
@@ -13,6 +16,13 @@
             "otherEntityName": "project",
             "ownerSide": false,
             "otherEntityRelationshipName": "technologies"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "user",
+            "otherEntityName": "userProfile",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "skill"
         }
     ],
     "changelogDate": "20180905112309",

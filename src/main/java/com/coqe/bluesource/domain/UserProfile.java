@@ -1,7 +1,6 @@
 package com.coqe.bluesource.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -44,11 +43,16 @@ public class UserProfile implements Serializable {
     @JoinTable(name = "user_profile_skill",
                joinColumns = @JoinColumn(name = "user_profiles_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "skills_id", referencedColumnName = "id"))
-    private Set<Skill> skills = new HashSet<>();
+    private Set<Keyword> skills = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties("createdBies")
-    private Project created;
+    @OneToMany(mappedBy = "createdBy")
+    private Set<Project> creates = new HashSet<>();
+
+    @OneToMany(mappedBy = "madeBy")
+    private Set<Comment> makes = new HashSet<>();
+
+    @OneToMany(mappedBy = "createdBy")
+    private Set<Issue> raises = new HashSet<>();
 
     @ManyToMany(mappedBy = "contributors")
     @JsonIgnore
@@ -56,7 +60,7 @@ public class UserProfile implements Serializable {
 
     @ManyToMany(mappedBy = "admins")
     @JsonIgnore
-    private Set<Project> administrators = new HashSet<>();
+    private Set<Project> administers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -119,42 +123,104 @@ public class UserProfile implements Serializable {
         this.account = user;
     }
 
-    public Set<Skill> getSkills() {
+    public Set<Keyword> getSkills() {
         return skills;
     }
 
-    public UserProfile skills(Set<Skill> skills) {
-        this.skills = skills;
+    public UserProfile skills(Set<Keyword> keywords) {
+        this.skills = keywords;
         return this;
     }
 
-    public UserProfile addSkill(Skill skill) {
-        this.skills.add(skill);
-        skill.getUsers().add(this);
+    public UserProfile addSkill(Keyword keyword) {
+        this.skills.add(keyword);
+        keyword.getUsers().add(this);
         return this;
     }
 
-    public UserProfile removeSkill(Skill skill) {
-        this.skills.remove(skill);
-        skill.getUsers().remove(this);
+    public UserProfile removeSkill(Keyword keyword) {
+        this.skills.remove(keyword);
+        keyword.getUsers().remove(this);
         return this;
     }
 
-    public void setSkills(Set<Skill> skills) {
-        this.skills = skills;
+    public void setSkills(Set<Keyword> keywords) {
+        this.skills = keywords;
     }
 
-    public Project getCreated() {
-        return created;
+    public Set<Project> getCreates() {
+        return creates;
     }
 
-    public UserProfile created(Project project) {
-        this.created = project;
+    public UserProfile creates(Set<Project> projects) {
+        this.creates = projects;
         return this;
     }
 
-    public void setCreated(Project project) {
-        this.created = project;
+    public UserProfile addCreate(Project project) {
+        this.creates.add(project);
+        project.setCreatedBy(this);
+        return this;
+    }
+
+    public UserProfile removeCreate(Project project) {
+        this.creates.remove(project);
+        project.setCreatedBy(null);
+        return this;
+    }
+
+    public void setCreates(Set<Project> projects) {
+        this.creates = projects;
+    }
+
+    public Set<Comment> getMakes() {
+        return makes;
+    }
+
+    public UserProfile makes(Set<Comment> comments) {
+        this.makes = comments;
+        return this;
+    }
+
+    public UserProfile addMake(Comment comment) {
+        this.makes.add(comment);
+        comment.setMadeBy(this);
+        return this;
+    }
+
+    public UserProfile removeMake(Comment comment) {
+        this.makes.remove(comment);
+        comment.setMadeBy(null);
+        return this;
+    }
+
+    public void setMakes(Set<Comment> comments) {
+        this.makes = comments;
+    }
+
+    public Set<Issue> getRaises() {
+        return raises;
+    }
+
+    public UserProfile raises(Set<Issue> issues) {
+        this.raises = issues;
+        return this;
+    }
+
+    public UserProfile addRaise(Issue issue) {
+        this.raises.add(issue);
+        issue.setCreatedBy(this);
+        return this;
+    }
+
+    public UserProfile removeRaise(Issue issue) {
+        this.raises.remove(issue);
+        issue.setCreatedBy(null);
+        return this;
+    }
+
+    public void setRaises(Set<Issue> issues) {
+        this.raises = issues;
     }
 
     public Set<Project> getProjects() {
@@ -182,29 +248,29 @@ public class UserProfile implements Serializable {
         this.projects = projects;
     }
 
-    public Set<Project> getAdministrators() {
-        return administrators;
+    public Set<Project> getAdministers() {
+        return administers;
     }
 
-    public UserProfile administrators(Set<Project> projects) {
-        this.administrators = projects;
+    public UserProfile administers(Set<Project> projects) {
+        this.administers = projects;
         return this;
     }
 
-    public UserProfile addAdministrator(Project project) {
-        this.administrators.add(project);
+    public UserProfile addAdminister(Project project) {
+        this.administers.add(project);
         project.getAdmins().add(this);
         return this;
     }
 
-    public UserProfile removeAdministrator(Project project) {
-        this.administrators.remove(project);
+    public UserProfile removeAdminister(Project project) {
+        this.administers.remove(project);
         project.getAdmins().remove(this);
         return this;
     }
 
-    public void setAdministrators(Set<Project> projects) {
-        this.administrators = projects;
+    public void setAdministers(Set<Project> projects) {
+        this.administers = projects;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

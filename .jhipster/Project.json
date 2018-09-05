@@ -10,6 +10,13 @@
         },
         {
             "fieldName": "createdAt",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dueDate",
             "fieldType": "ZonedDateTime"
         },
         {
@@ -22,8 +29,13 @@
             "fieldTypeBlobContent": "image"
         },
         {
+            "fieldName": "interest",
+            "fieldType": "Integer"
+        },
+        {
             "fieldName": "status",
-            "fieldType": "String"
+            "fieldType": "Status",
+            "fieldValues": "DRAFT,OPEN,CLOSED,ATTIC"
         },
         {
             "fieldName": "issueTrackerUri",
@@ -40,15 +52,9 @@
             "relationshipType": "one-to-one",
             "relationshipName": "repo",
             "otherEntityName": "repo",
-            "otherEntityField": "id",
+            "otherEntityField": "uri",
             "ownerSide": true,
-            "otherEntityRelationshipName": "project"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "createdBy",
-            "otherEntityName": "userProfile",
-            "otherEntityRelationshipName": "created"
+            "otherEntityRelationshipName": "project(name)"
         },
         {
             "relationshipType": "one-to-many",
@@ -57,11 +63,23 @@
             "otherEntityRelationshipName": "project"
         },
         {
+            "relationshipType": "many-to-one",
+            "relationshipName": "createdBy",
+            "otherEntityName": "userProfile",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "issue",
+            "otherEntityName": "issue",
+            "otherEntityField": "summary"
+        },
+        {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "project",
             "relationshipName": "technologies",
             "otherEntityName": "keyword",
-            "otherEntityField": "id",
+            "otherEntityField": "word",
             "ownerSide": true
         },
         {
@@ -74,8 +92,8 @@
         },
         {
             "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "administrator",
-            "relationshipName": "admins",
+            "otherEntityRelationshipName": "administer",
+            "relationshipName": "admin",
             "otherEntityName": "userProfile",
             "otherEntityField": "id",
             "ownerSide": true

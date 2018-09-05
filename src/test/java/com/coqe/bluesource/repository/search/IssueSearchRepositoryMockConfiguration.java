@@ -4,13 +4,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Configure a Mock version of SkillSearchRepository to test the
+ * Configure a Mock version of IssueSearchRepository to test the
  * application without starting Elasticsearch.
  */
 @Configuration
-public class SkillSearchRepositoryMockConfiguration {
+public class IssueSearchRepositoryMockConfiguration {
 
     @MockBean
-    private SkillSearchRepository mockSkillSearchRepository;
+    private IssueSearchRepository mockIssueSearchRepository;
 
 }

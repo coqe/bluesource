@@ -35,6 +35,10 @@ import userProfile, {
 import skill, {
   SkillState
 } from 'app/entities/skill/skill.reducer';
+// prettier-ignore
+import issue, {
+  IssueState
+} from 'app/entities/issue/issue.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -53,6 +57,7 @@ export interface IRootState {
   readonly repo: RepoState;
   readonly userProfile: UserProfileState;
   readonly skill: SkillState;
+  readonly issue: IssueState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -73,6 +78,7 @@ const rootReducer = combineReducers<IRootState>({
   repo,
   userProfile,
   skill,
+  issue,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

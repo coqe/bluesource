@@ -152,6 +152,24 @@ public class KeywordResourceIntTest {
 
     @Test
     @Transactional
+    public void checkWordIsRequired() throws Exception {
+        int databaseSizeBeforeTest = keywordRepository.findAll().size();
+        // set the field null
+        keyword.setWord(null);
+
+        // Create the Keyword, which fails.
+
+        restKeywordMockMvc.perform(post("/api/keywords")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(keyword)))
+            .andExpect(status().isBadRequest());
+
+        List<Keyword> keywordList = keywordRepository.findAll();
+        assertThat(keywordList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllKeywords() throws Exception {
         // Initialize the database
         keywordRepository.saveAndFlush(keyword);

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -46,7 +47,7 @@ public class RepoResource {
      */
     @PostMapping("/repos")
     @Timed
-    public ResponseEntity<Repo> createRepo(@RequestBody Repo repo) throws URISyntaxException {
+    public ResponseEntity<Repo> createRepo(@Valid @RequestBody Repo repo) throws URISyntaxException {
         log.debug("REST request to save Repo : {}", repo);
         if (repo.getId() != null) {
             throw new BadRequestAlertException("A new repo cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,7 +69,7 @@ public class RepoResource {
      */
     @PutMapping("/repos")
     @Timed
-    public ResponseEntity<Repo> updateRepo(@RequestBody Repo repo) throws URISyntaxException {
+    public ResponseEntity<Repo> updateRepo(@Valid @RequestBody Repo repo) throws URISyntaxException {
         log.debug("REST request to update Repo : {}", repo);
         if (repo.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

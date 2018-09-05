@@ -26,6 +26,10 @@
             </column>
 
             <column name="created_at" type="datetime">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="due_date" type="datetime">
                 <constraints nullable="true" />
             </column>
 
@@ -37,6 +41,10 @@
                 <constraints nullable="true" />
             </column>
             <column name="logo_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="interest" type="integer">
                 <constraints nullable="true" />
             </column>
 
@@ -57,9 +65,18 @@
             <column name="repo_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_project_repo_id" />
             </column>
+            <column name="created_by_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="issue_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="project" columnName="created_at" columnDataType="datetime"/>
+        <dropDefaultValue tableName="project" columnName="due_date" columnDataType="datetime"/>
         
         <createTable tableName="project_technologies">
             <column name="technologies_id" type="bigint">
@@ -83,7 +100,7 @@
 
         <addPrimaryKey columnNames="projects_id, contributors_id" tableName="project_contributor"/>
         
-        <createTable tableName="project_admins">
+        <createTable tableName="project_admin">
             <column name="admins_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -92,7 +109,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="projects_id, admins_id" tableName="project_admins"/>
+        <addPrimaryKey columnNames="projects_id, admins_id" tableName="project_admin"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

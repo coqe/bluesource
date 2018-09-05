@@ -45,6 +45,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.coqe.bluesource.domain.enumeration.Status;
 /**
  * Test class for the ProjectResource REST controller.
  *
@@ -60,6 +61,9 @@ public class ProjectResourceIntTest {
     private static final ZonedDateTime DEFAULT_CREATED_AT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_CREATED_AT = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
+    private static final ZonedDateTime DEFAULT_DUE_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_DUE_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
@@ -68,8 +72,11 @@ public class ProjectResourceIntTest {
     private static final String DEFAULT_LOGO_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_LOGO_CONTENT_TYPE = "image/png";
 
-    private static final String DEFAULT_STATUS = "AAAAAAAAAA";
-    private static final String UPDATED_STATUS = "BBBBBBBBBB";
+    private static final Integer DEFAULT_INTEREST = 1;
+    private static final Integer UPDATED_INTEREST = 2;
+
+    private static final Status DEFAULT_STATUS = Status.DRAFT;
+    private static final Status UPDATED_STATUS = Status.OPEN;
 
     private static final String DEFAULT_ISSUE_TRACKER_URI = "AAAAAAAAAA";
     private static final String UPDATED_ISSUE_TRACKER_URI = "BBBBBBBBBB";
@@ -135,9 +142,11 @@ public class ProjectResourceIntTest {
         Project project = new Project()
             .name(DEFAULT_NAME)
             .createdAt(DEFAULT_CREATED_AT)
+            .dueDate(DEFAULT_DUE_DATE)
             .description(DEFAULT_DESCRIPTION)
             .logo(DEFAULT_LOGO)
             .logoContentType(DEFAULT_LOGO_CONTENT_TYPE)
+            .interest(DEFAULT_INTEREST)
             .status(DEFAULT_STATUS)
             .issueTrackerUri(DEFAULT_ISSUE_TRACKER_URI)
             .attachment(DEFAULT_ATTACHMENT)
@@ -167,9 +176,11 @@ public class ProjectResourceIntTest {
         Project testProject = projectList.get(projectList.size() - 1);
         assertThat(testProject.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testProject.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
+        assertThat(testProject.getDueDate()).isEqualTo(DEFAULT_DUE_DATE);
         assertThat(testProject.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testProject.getLogo()).isEqualTo(DEFAULT_LOGO);
         assertThat(testProject.getLogoContentType()).isEqualTo(DEFAULT_LOGO_CONTENT_TYPE);
+        assertThat(testProject.getInterest()).isEqualTo(DEFAULT_INTEREST);
         assertThat(testProject.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testProject.getIssueTrackerUri()).isEqualTo(DEFAULT_ISSUE_TRACKER_URI);
         assertThat(testProject.getAttachment()).isEqualTo(DEFAULT_ATTACHMENT);
@@ -221,6 +232,24 @@ public class ProjectResourceIntTest {
 
     @Test
     @Transactional
+    public void checkCreatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = projectRepository.findAll().size();
+        // set the field null
+        project.setCreatedAt(null);
+
+        // Create the Project, which fails.
+
+        restProjectMockMvc.perform(post("/api/projects")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(project)))
+            .andExpect(status().isBadRequest());
+
+        List<Project> projectList = projectRepository.findAll();
+        assertThat(projectList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllProjects() throws Exception {
         // Initialize the database
         projectRepository.saveAndFlush(project);
@@ -232,9 +261,11 @@ public class ProjectResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(project.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(sameInstant(DEFAULT_CREATED_AT))))
+            .andExpect(jsonPath("$.[*].dueDate").value(hasItem(sameInstant(DEFAULT_DUE_DATE))))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].logoContentType").value(hasItem(DEFAULT_LOGO_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(Base64Utils.encodeToString(DEFAULT_LOGO))))
+            .andExpect(jsonPath("$.[*].interest").value(hasItem(DEFAULT_INTEREST)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].issueTrackerUri").value(hasItem(DEFAULT_ISSUE_TRACKER_URI.toString())))
             .andExpect(jsonPath("$.[*].attachmentContentType").value(hasItem(DEFAULT_ATTACHMENT_CONTENT_TYPE)))
@@ -285,9 +316,11 @@ public class ProjectResourceIntTest {
             .andExpect(jsonPath("$.id").value(project.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.createdAt").value(sameInstant(DEFAULT_CREATED_AT)))
+            .andExpect(jsonPath("$.dueDate").value(sameInstant(DEFAULT_DUE_DATE)))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.logoContentType").value(DEFAULT_LOGO_CONTENT_TYPE))
             .andExpect(jsonPath("$.logo").value(Base64Utils.encodeToString(DEFAULT_LOGO)))
+            .andExpect(jsonPath("$.interest").value(DEFAULT_INTEREST))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.issueTrackerUri").value(DEFAULT_ISSUE_TRACKER_URI.toString()))
             .andExpect(jsonPath("$.attachmentContentType").value(DEFAULT_ATTACHMENT_CONTENT_TYPE))
@@ -318,9 +351,11 @@ public class ProjectResourceIntTest {
         updatedProject
             .name(UPDATED_NAME)
             .createdAt(UPDATED_CREATED_AT)
+            .dueDate(UPDATED_DUE_DATE)
             .description(UPDATED_DESCRIPTION)
             .logo(UPDATED_LOGO)
             .logoContentType(UPDATED_LOGO_CONTENT_TYPE)
+            .interest(UPDATED_INTEREST)
             .status(UPDATED_STATUS)
             .issueTrackerUri(UPDATED_ISSUE_TRACKER_URI)
             .attachment(UPDATED_ATTACHMENT)
@@ -337,9 +372,11 @@ public class ProjectResourceIntTest {
         Project testProject = projectList.get(projectList.size() - 1);
         assertThat(testProject.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testProject.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testProject.getDueDate()).isEqualTo(UPDATED_DUE_DATE);
         assertThat(testProject.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testProject.getLogo()).isEqualTo(UPDATED_LOGO);
         assertThat(testProject.getLogoContentType()).isEqualTo(UPDATED_LOGO_CONTENT_TYPE);
+        assertThat(testProject.getInterest()).isEqualTo(UPDATED_INTEREST);
         assertThat(testProject.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testProject.getIssueTrackerUri()).isEqualTo(UPDATED_ISSUE_TRACKER_URI);
         assertThat(testProject.getAttachment()).isEqualTo(UPDATED_ATTACHMENT);
@@ -405,9 +442,11 @@ public class ProjectResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(project.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(sameInstant(DEFAULT_CREATED_AT))))
+            .andExpect(jsonPath("$.[*].dueDate").value(hasItem(sameInstant(DEFAULT_DUE_DATE))))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].logoContentType").value(hasItem(DEFAULT_LOGO_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(Base64Utils.encodeToString(DEFAULT_LOGO))))
+            .andExpect(jsonPath("$.[*].interest").value(hasItem(DEFAULT_INTEREST)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].issueTrackerUri").value(hasItem(DEFAULT_ISSUE_TRACKER_URI.toString())))
             .andExpect(jsonPath("$.[*].attachmentContentType").value(hasItem(DEFAULT_ATTACHMENT_CONTENT_TYPE)))

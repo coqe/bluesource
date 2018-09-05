@@ -90,7 +90,14 @@ export class RepoUpdate extends React.Component<IRepoUpdateProps, IRepoUpdateSta
                   <Label id="uriLabel" for="uri">
                     Uri
                   </Label>
-                  <AvField id="repo-uri" type="text" name="uri" />
+                  <AvField
+                    id="repo-uri"
+                    type="text"
+                    name="uri"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/repo" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;

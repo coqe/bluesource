@@ -57,14 +57,12 @@ export class UserProfileDetail extends React.Component<IUserProfileDetailProps> 
               {userProfileEntity.skills
                 ? userProfileEntity.skills.map((val, i) => (
                     <span key={val.id}>
-                      <a>{val.id}</a>
+                      <a>{val.word}</a>
                       {i === userProfileEntity.skills.length - 1 ? '' : ', '}
                     </span>
                   ))
                 : null}
             </dd>
-            <dt>Created</dt>
-            <dd>{userProfileEntity.created ? userProfileEntity.created.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/user-profile" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -130,11 +130,17 @@ export class Project extends React.Component<IProjectProps, IProjectState> {
                   <th className="hand" onClick={this.sort('createdAt')}>
                     Created At <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={this.sort('dueDate')}>
+                    Due Date <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={this.sort('description')}>
                     Description <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('logo')}>
                     Logo <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={this.sort('interest')}>
+                    Interest <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={this.sort('status')}>
                     Status <FontAwesomeIcon icon="sort" />
@@ -147,6 +153,12 @@ export class Project extends React.Component<IProjectProps, IProjectState> {
                   </th>
                   <th>
                     Repo <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    Created By <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th>
+                    Issue <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -163,6 +175,9 @@ export class Project extends React.Component<IProjectProps, IProjectState> {
                     <td>
                       <TextFormat type="date" value={project.createdAt} format={APP_DATE_FORMAT} />
                     </td>
+                    <td>
+                      <TextFormat type="date" value={project.dueDate} format={APP_DATE_FORMAT} />
+                    </td>
                     <td>{project.description}</td>
                     <td>
                       {project.logo ? (
@@ -177,6 +192,7 @@ export class Project extends React.Component<IProjectProps, IProjectState> {
                         </div>
                       ) : null}
                     </td>
+                    <td>{project.interest}</td>
                     <td>{project.status}</td>
                     <td>{project.issueTrackerUri}</td>
                     <td>
@@ -189,7 +205,9 @@ export class Project extends React.Component<IProjectProps, IProjectState> {
                         </div>
                       ) : null}
                     </td>
-                    <td>{project.repo ? <Link to={`repo/${project.repo.id}`}>{project.repo.id}</Link> : ''}</td>
+                    <td>{project.repo ? <Link to={`repo/${project.repo.id}`}>{project.repo.uri}</Link> : ''}</td>
+                    <td>{project.createdBy ? <Link to={`user-profile/${project.createdBy.id}`}>{project.createdBy.id}</Link> : ''}</td>
+                    <td>{project.issue ? <Link to={`issue/${project.issue.id}`}>{project.issue.summary}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${project.id}`} color="info" size="sm">

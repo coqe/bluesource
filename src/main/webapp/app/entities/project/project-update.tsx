@@ -12,6 +12,8 @@ import { IRepo } from 'app/shared/model/repo.model';
 import { getEntities as getRepos } from 'app/entities/repo/repo.reducer';
 import { IUserProfile } from 'app/shared/model/user-profile.model';
 import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
+import { IIssue } from 'app/shared/model/issue.model';
+import { getEntities as getIssues } from 'app/entities/issue/issue.reducer';
 import { IKeyword } from 'app/shared/model/keyword.model';
 import { getEntities as getKeywords } from 'app/entities/keyword/keyword.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './project.reducer';
@@ -25,10 +27,11 @@ export interface IProjectUpdateProps extends StateProps, DispatchProps, RouteCom
 export interface IProjectUpdateState {
   isNew: boolean;
   idscontributor: any[];
-  idsadmins: any[];
+  idsadmin: any[];
   idstechnologies: any[];
   repoId: number;
   createdById: number;
+  issueId: number;
 }
 
 export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProjectUpdateState> {
@@ -36,10 +39,11 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
     super(props);
     this.state = {
       idscontributor: [],
-      idsadmins: [],
+      idsadmin: [],
       idstechnologies: [],
       repoId: 0,
       createdById: 0,
+      issueId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -51,6 +55,7 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
 
     this.props.getRepos();
     this.props.getUserProfiles();
+    this.props.getIssues();
     this.props.getKeywords();
   }
 
@@ -64,6 +69,7 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
 
   saveEntity = (event, errors, values) => {
     values.createdAt = new Date(values.createdAt);
+    values.dueDate = new Date(values.dueDate);
 
     if (errors.length === 0) {
       const { projectEntity } = this.props;
@@ -89,7 +95,7 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
   };
 
   render() {
-    const { projectEntity, repos, userProfiles, keywords, loading, updating } = this.props;
+    const { projectEntity, repos, userProfiles, issues, keywords, loading, updating } = this.props;
     const { isNew } = this.state;
 
     const { logo, logoContentType, attachment, attachmentContentType } = projectEntity;
@@ -136,6 +142,21 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
                     className="form-control"
                     name="createdAt"
                     value={isNew ? null : convertDateTimeFromServer(this.props.projectEntity.createdAt)}
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="dueDateLabel" for="dueDate">
+                    Due Date
+                  </Label>
+                  <AvInput
+                    id="project-dueDate"
+                    type="datetime-local"
+                    className="form-control"
+                    name="dueDate"
+                    value={isNew ? null : convertDateTimeFromServer(this.props.projectEntity.dueDate)}
                   />
                 </AvGroup>
                 <AvGroup>
@@ -175,10 +196,25 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
                   </AvGroup>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="statusLabel" for="status">
-                    Status
+                  <Label id="interestLabel" for="interest">
+                    Interest
                   </Label>
-                  <AvField id="project-status" type="text" name="status" />
+                  <AvField id="project-interest" type="number" className="form-control" name="interest" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="statusLabel">Status</Label>
+                  <AvInput
+                    id="project-status"
+                    type="select"
+                    className="form-control"
+                    name="status"
+                    value={(!isNew && projectEntity.status) || 'DRAFT'}
+                  >
+                    <option value="DRAFT">DRAFT</option>
+                    <option value="OPEN">OPEN</option>
+                    <option value="CLOSED">CLOSED</option>
+                    <option value="ATTIC">ATTIC</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label id="issueTrackerUriLabel" for="issueTrackerUri">
@@ -215,13 +251,39 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
                   </AvGroup>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="repo.id">Repo</Label>
+                  <Label for="repo.uri">Repo</Label>
                   <AvInput id="project-repo" type="select" className="form-control" name="repo.id">
                     <option value="" key="0" />
                     {repos
                       ? repos.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.uri}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="createdBy.id">Created By</Label>
+                  <AvInput id="project-createdBy" type="select" className="form-control" name="createdBy.id">
+                    <option value="" key="0" />
+                    {userProfiles
+                      ? userProfiles.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="issue.summary">Issue</Label>
+                  <AvInput id="project-issue" type="select" className="form-control" name="issue.id">
+                    <option value="" key="0" />
+                    {issues
+                      ? issues.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.summary}
                           </option>
                         ))
                       : null}
@@ -241,7 +303,7 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
                     {keywords
                       ? keywords.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.word}
                           </option>
                         ))
                       : null}
@@ -268,9 +330,9 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="userProfiles">Admins</Label>
+                  <Label for="userProfiles">Admin</Label>
                   <AvInput
-                    id="project-admins"
+                    id="project-admin"
                     type="select"
                     multiple
                     className="form-control"
@@ -307,6 +369,7 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
 const mapStateToProps = (storeState: IRootState) => ({
   repos: storeState.repo.entities,
   userProfiles: storeState.userProfile.entities,
+  issues: storeState.issue.entities,
   keywords: storeState.keyword.entities,
   projectEntity: storeState.project.entity,
   loading: storeState.project.loading,
@@ -316,6 +379,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getRepos,
   getUserProfiles,
+  getIssues,
   getKeywords,
   getEntity,
   updateEntity,

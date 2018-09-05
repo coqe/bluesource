@@ -4,23 +4,23 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { byteSize, ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getSearchEntities, getEntities } from './skill.reducer';
-import { ISkill } from 'app/shared/model/skill.model';
+import { getSearchEntities, getEntities } from './issue.reducer';
+import { IIssue } from 'app/shared/model/issue.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ISkillProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+export interface IIssueProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export interface ISkillState {
+export interface IIssueState {
   search: string;
 }
 
-export class Skill extends React.Component<ISkillProps, ISkillState> {
-  state: ISkillState = {
+export class Issue extends React.Component<IIssueProps, IIssueState> {
+  state: IIssueState = {
     search: ''
   };
 
@@ -44,13 +44,13 @@ export class Skill extends React.Component<ISkillProps, ISkillState> {
   handleSearch = event => this.setState({ search: event.target.value });
 
   render() {
-    const { skillList, match } = this.props;
+    const { issueList, match } = this.props;
     return (
       <div>
-        <h2 id="skill-heading">
-          Skills
+        <h2 id="issue-heading">
+          Issues
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Skill
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Issue
           </Link>
         </h2>
         <Row>
@@ -75,28 +75,36 @@ export class Skill extends React.Component<ISkillProps, ISkillState> {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Summary</th>
+                <th>Full Description</th>
+                <th>Interest</th>
+                <th>Rewards</th>
+                <th>Created By</th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {skillList.map((skill, i) => (
+              {issueList.map((issue, i) => (
                 <tr key={`entity-${i}`}>
                   <td>
-                    <Button tag={Link} to={`${match.url}/${skill.id}`} color="link" size="sm">
-                      {skill.id}
+                    <Button tag={Link} to={`${match.url}/${issue.id}`} color="link" size="sm">
+                      {issue.id}
                     </Button>
                   </td>
-                  <td>{skill.name}</td>
+                  <td>{issue.summary}</td>
+                  <td>{issue.fullDescription}</td>
+                  <td>{issue.interest}</td>
+                  <td>{issue.rewards}</td>
+                  <td>{issue.createdBy ? <Link to={`user-profile/${issue.createdBy.id}`}>{issue.createdBy.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`${match.url}/${skill.id}`} color="info" size="sm">
+                      <Button tag={Link} to={`${match.url}/${issue.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button tag={Link} to={`${match.url}/${skill.id}/edit`} color="primary" size="sm">
+                      <Button tag={Link} to={`${match.url}/${issue.id}/edit`} color="primary" size="sm">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`${match.url}/${skill.id}/delete`} color="danger" size="sm">
+                      <Button tag={Link} to={`${match.url}/${issue.id}/delete`} color="danger" size="sm">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -111,8 +119,8 @@ export class Skill extends React.Component<ISkillProps, ISkillState> {
   }
 }
 
-const mapStateToProps = ({ skill }: IRootState) => ({
-  skillList: skill.entities
+const mapStateToProps = ({ issue }: IRootState) => ({
+  issueList: issue.entities
 });
 
 const mapDispatchToProps = {
@@ -126,4 +134,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Skill);
+)(Issue);

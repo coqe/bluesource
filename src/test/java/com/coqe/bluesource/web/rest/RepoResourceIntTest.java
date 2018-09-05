@@ -152,6 +152,24 @@ public class RepoResourceIntTest {
 
     @Test
     @Transactional
+    public void checkUriIsRequired() throws Exception {
+        int databaseSizeBeforeTest = repoRepository.findAll().size();
+        // set the field null
+        repo.setUri(null);
+
+        // Create the Repo, which fails.
+
+        restRepoMockMvc.perform(post("/api/repos")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(repo)))
+            .andExpect(status().isBadRequest());
+
+        List<Repo> repoList = repoRepository.findAll();
+        assertThat(repoList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllRepos() throws Exception {
         // Initialize the database
         repoRepository.saveAndFlush(repo);

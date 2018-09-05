@@ -79,7 +79,6 @@ export class UserProfile extends React.Component<IUserProfileProps, IUserProfile
                 <th>Avatar</th>
                 <th>Account</th>
                 <th>Skill</th>
-                <th>Created</th>
                 <th />
               </tr>
             </thead>
@@ -110,13 +109,12 @@ export class UserProfile extends React.Component<IUserProfileProps, IUserProfile
                     {userProfile.skills
                       ? userProfile.skills.map((val, j) => (
                           <span key={j}>
-                            <Link to={`skill/${val.id}`}>{val.id}</Link>
+                            <Link to={`keyword/${val.id}`}>{val.word}</Link>
                             {j === userProfile.skills.length - 1 ? '' : ', '}
                           </span>
                         ))
                       : null}
                   </td>
-                  <td>{userProfile.created ? <Link to={`project/${userProfile.created.id}`}>{userProfile.created.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${userProfile.id}`} color="info" size="sm">

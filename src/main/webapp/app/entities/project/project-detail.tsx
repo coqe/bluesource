@@ -39,6 +39,12 @@ export class ProjectDetail extends React.Component<IProjectDetailProps> {
               <TextFormat value={projectEntity.createdAt} type="date" format={APP_DATE_FORMAT} />
             </dd>
             <dt>
+              <span id="dueDate">Due Date</span>
+            </dt>
+            <dd>
+              <TextFormat value={projectEntity.dueDate} type="date" format={APP_DATE_FORMAT} />
+            </dd>
+            <dt>
               <span id="description">Description</span>
             </dt>
             <dd>{projectEntity.description}</dd>
@@ -57,6 +63,10 @@ export class ProjectDetail extends React.Component<IProjectDetailProps> {
                 </div>
               ) : null}
             </dd>
+            <dt>
+              <span id="interest">Interest</span>
+            </dt>
+            <dd>{projectEntity.interest}</dd>
             <dt>
               <span id="status">Status</span>
             </dt>
@@ -79,13 +89,17 @@ export class ProjectDetail extends React.Component<IProjectDetailProps> {
               ) : null}
             </dd>
             <dt>Repo</dt>
-            <dd>{projectEntity.repo ? projectEntity.repo.id : ''}</dd>
+            <dd>{projectEntity.repo ? projectEntity.repo.uri : ''}</dd>
+            <dt>Created By</dt>
+            <dd>{projectEntity.createdBy ? projectEntity.createdBy.id : ''}</dd>
+            <dt>Issue</dt>
+            <dd>{projectEntity.issue ? projectEntity.issue.summary : ''}</dd>
             <dt>Technologies</dt>
             <dd>
               {projectEntity.technologies
                 ? projectEntity.technologies.map((val, i) => (
                     <span key={val.id}>
-                      <a>{val.id}</a>
+                      <a>{val.word}</a>
                       {i === projectEntity.technologies.length - 1 ? '' : ', '}
                     </span>
                   ))
@@ -102,7 +116,7 @@ export class ProjectDetail extends React.Component<IProjectDetailProps> {
                   ))
                 : null}
             </dd>
-            <dt>Admins</dt>
+            <dt>Admin</dt>
             <dd>
               {projectEntity.admins
                 ? projectEntity.admins.map((val, i) => (

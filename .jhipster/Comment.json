@@ -3,19 +3,37 @@
     "fields": [
         {
             "fieldName": "text",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "createdAt",
-            "fieldType": "ZonedDateTime"
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
         {
             "relationshipType": "many-to-one",
+            "relationshipName": "madeBy",
+            "otherEntityName": "userProfile",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
             "relationshipName": "project",
             "otherEntityName": "project",
-            "otherEntityField": "id"
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "issue",
+            "otherEntityName": "issue",
+            "otherEntityField": "summary"
         }
     ],
     "changelogDate": "20180905112308",

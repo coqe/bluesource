@@ -24,15 +24,27 @@
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "user",
             "relationshipName": "skill",
-            "otherEntityName": "skill",
-            "otherEntityField": "id",
+            "otherEntityName": "keyword",
+            "otherEntityField": "word",
             "ownerSide": true
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "created",
+            "relationshipType": "one-to-many",
+            "relationshipName": "create",
             "otherEntityName": "project",
-            "otherEntityField": "id"
+            "otherEntityRelationshipName": "createdBy"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "make",
+            "otherEntityName": "comment",
+            "otherEntityRelationshipName": "madeBy"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "raise",
+            "otherEntityName": "issue",
+            "otherEntityRelationshipName": "createdBy"
         },
         {
             "relationshipType": "many-to-many",
@@ -43,10 +55,10 @@
         },
         {
             "relationshipType": "many-to-many",
-            "relationshipName": "administrator",
+            "relationshipName": "administer",
             "otherEntityName": "project",
             "ownerSide": false,
-            "otherEntityRelationshipName": "admins"
+            "otherEntityRelationshipName": "admin"
         }
     ],
     "changelogDate": "20180905112311",

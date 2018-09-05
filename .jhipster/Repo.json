@@ -3,7 +3,10 @@
     "fields": [
         {
             "fieldName": "uri",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [

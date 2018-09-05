@@ -1,6 +1,7 @@
 package com.coqe.bluesource.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -11,6 +12,8 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+
+import com.coqe.bluesource.domain.enumeration.Status;
 
 /**
  * A Project.
@@ -31,8 +34,12 @@ public class Project implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "created_at")
+    @NotNull
+    @Column(name = "created_at", nullable = false)
     private ZonedDateTime createdAt;
+
+    @Column(name = "due_date")
+    private ZonedDateTime dueDate;
 
     @Column(name = "description")
     private String description;
@@ -44,8 +51,12 @@ public class Project implements Serializable {
     @Column(name = "logo_content_type")
     private String logoContentType;
 
+    @Column(name = "interest")
+    private Integer interest;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private Status status;
 
     @Column(name = "issue_tracker_uri")
     private String issueTrackerUri;
@@ -61,11 +72,16 @@ public class Project implements Serializable {
     @JoinColumn(unique = true)
     private Repo repo;
 
-    @OneToMany(mappedBy = "created")
-    private Set<UserProfile> createdBies = new HashSet<>();
-
     @OneToMany(mappedBy = "project")
     private Set<Comment> comments = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("creates")
+    private UserProfile createdBy;
+
+    @ManyToOne
+    @JsonIgnoreProperties("projects")
+    private Issue issue;
 
     @ManyToMany
     @JoinTable(name = "project_technologies",
@@ -80,7 +96,7 @@ public class Project implements Serializable {
     private Set<UserProfile> contributors = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "project_admins",
+    @JoinTable(name = "project_admin",
                joinColumns = @JoinColumn(name = "projects_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "admins_id", referencedColumnName = "id"))
     private Set<UserProfile> admins = new HashSet<>();
@@ -118,6 +134,19 @@ public class Project implements Serializable {
 
     public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public ZonedDateTime getDueDate() {
+        return dueDate;
+    }
+
+    public Project dueDate(ZonedDateTime dueDate) {
+        this.dueDate = dueDate;
+        return this;
+    }
+
+    public void setDueDate(ZonedDateTime dueDate) {
+        this.dueDate = dueDate;
     }
 
     public String getDescription() {
@@ -159,16 +188,29 @@ public class Project implements Serializable {
         this.logoContentType = logoContentType;
     }
 
-    public String getStatus() {
+    public Integer getInterest() {
+        return interest;
+    }
+
+    public Project interest(Integer interest) {
+        this.interest = interest;
+        return this;
+    }
+
+    public void setInterest(Integer interest) {
+        this.interest = interest;
+    }
+
+    public Status getStatus() {
         return status;
     }
 
-    public Project status(String status) {
+    public Project status(Status status) {
         this.status = status;
         return this;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -224,31 +266,6 @@ public class Project implements Serializable {
         this.repo = repo;
     }
 
-    public Set<UserProfile> getCreatedBies() {
-        return createdBies;
-    }
-
-    public Project createdBies(Set<UserProfile> userProfiles) {
-        this.createdBies = userProfiles;
-        return this;
-    }
-
-    public Project addCreatedBy(UserProfile userProfile) {
-        this.createdBies.add(userProfile);
-        userProfile.setCreated(this);
-        return this;
-    }
-
-    public Project removeCreatedBy(UserProfile userProfile) {
-        this.createdBies.remove(userProfile);
-        userProfile.setCreated(null);
-        return this;
-    }
-
-    public void setCreatedBies(Set<UserProfile> userProfiles) {
-        this.createdBies = userProfiles;
-    }
-
     public Set<Comment> getComments() {
         return comments;
     }
@@ -272,6 +289,32 @@ public class Project implements Serializable {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public UserProfile getCreatedBy() {
+        return createdBy;
+    }
+
+    public Project createdBy(UserProfile userProfile) {
+        this.createdBy = userProfile;
+        return this;
+    }
+
+    public void setCreatedBy(UserProfile userProfile) {
+        this.createdBy = userProfile;
+    }
+
+    public Issue getIssue() {
+        return issue;
+    }
+
+    public Project issue(Issue issue) {
+        this.issue = issue;
+        return this;
+    }
+
+    public void setIssue(Issue issue) {
+        this.issue = issue;
     }
 
     public Set<Keyword> getTechnologies() {
@@ -333,15 +376,15 @@ public class Project implements Serializable {
         return this;
     }
 
-    public Project addAdmins(UserProfile userProfile) {
+    public Project addAdmin(UserProfile userProfile) {
         this.admins.add(userProfile);
-        userProfile.getAdministrators().add(this);
+        userProfile.getAdministers().add(this);
         return this;
     }
 
-    public Project removeAdmins(UserProfile userProfile) {
+    public Project removeAdmin(UserProfile userProfile) {
         this.admins.remove(userProfile);
-        userProfile.getAdministrators().remove(this);
+        userProfile.getAdministers().remove(this);
         return this;
     }
 
@@ -376,9 +419,11 @@ public class Project implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
+            ", dueDate='" + getDueDate() + "'" +
             ", description='" + getDescription() + "'" +
             ", logo='" + getLogo() + "'" +
             ", logoContentType='" + getLogoContentType() + "'" +
+            ", interest=" + getInterest() +
             ", status='" + getStatus() + "'" +
             ", issueTrackerUri='" + getIssueTrackerUri() + "'" +
             ", attachment='" + getAttachment() + "'" +

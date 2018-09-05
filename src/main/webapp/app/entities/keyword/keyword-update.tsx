@@ -10,6 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IProject } from 'app/shared/model/project.model';
 import { getEntities as getProjects } from 'app/entities/project/project.reducer';
+import { IUserProfile } from 'app/shared/model/user-profile.model';
+import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './keyword.reducer';
 import { IKeyword } from 'app/shared/model/keyword.model';
 // tslint:disable-next-line:no-unused-variable
@@ -21,6 +23,7 @@ export interface IKeywordUpdateProps extends StateProps, DispatchProps, RouteCom
 export interface IKeywordUpdateState {
   isNew: boolean;
   projectId: number;
+  userId: number;
 }
 
 export class KeywordUpdate extends React.Component<IKeywordUpdateProps, IKeywordUpdateState> {
@@ -28,6 +31,7 @@ export class KeywordUpdate extends React.Component<IKeywordUpdateProps, IKeyword
     super(props);
     this.state = {
       projectId: 0,
+      userId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -40,6 +44,7 @@ export class KeywordUpdate extends React.Component<IKeywordUpdateProps, IKeyword
     }
 
     this.props.getProjects();
+    this.props.getUserProfiles();
   }
 
   saveEntity = (event, errors, values) => {
@@ -64,7 +69,7 @@ export class KeywordUpdate extends React.Component<IKeywordUpdateProps, IKeyword
   };
 
   render() {
-    const { keywordEntity, projects, loading, updating } = this.props;
+    const { keywordEntity, projects, userProfiles, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -90,7 +95,14 @@ export class KeywordUpdate extends React.Component<IKeywordUpdateProps, IKeyword
                   <Label id="wordLabel" for="word">
                     Word
                   </Label>
-                  <AvField id="keyword-word" type="text" name="word" />
+                  <AvField
+                    id="keyword-word"
+                    type="text"
+                    name="word"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/keyword" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
@@ -111,6 +123,7 @@ export class KeywordUpdate extends React.Component<IKeywordUpdateProps, IKeyword
 
 const mapStateToProps = (storeState: IRootState) => ({
   projects: storeState.project.entities,
+  userProfiles: storeState.userProfile.entities,
   keywordEntity: storeState.keyword.entity,
   loading: storeState.keyword.loading,
   updating: storeState.keyword.updating
@@ -118,6 +131,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getProjects,
+  getUserProfiles,
   getEntity,
   updateEntity,
   createEntity,

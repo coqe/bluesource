@@ -1,52 +1,52 @@
 package com.coqe.bluesource.service;
 
-import com.coqe.bluesource.domain.Skill;
+import com.coqe.bluesource.domain.Issue;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Service Interface for managing Skill.
+ * Service Interface for managing Issue.
  */
-public interface SkillService {
+public interface IssueService {
 
     /**
-     * Save a skill.
+     * Save a issue.
      *
-     * @param skill the entity to save
+     * @param issue the entity to save
      * @return the persisted entity
      */
-    Skill save(Skill skill);
+    Issue save(Issue issue);
 
     /**
-     * Get all the skills.
+     * Get all the issues.
      *
      * @return the list of entities
      */
-    List<Skill> findAll();
+    List<Issue> findAll();
 
 
     /**
-     * Get the "id" skill.
+     * Get the "id" issue.
      *
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<Skill> findOne(Long id);
+    Optional<Issue> findOne(Long id);
 
     /**
-     * Delete the "id" skill.
+     * Delete the "id" issue.
      *
      * @param id the id of the entity
      */
     void delete(Long id);
 
     /**
-     * Search for the skill corresponding to the query.
+     * Search for the issue corresponding to the query.
      *
      * @param query the query of the search
      * 
      * @return the list of entities
      */
-    List<Skill> search(String query);
+    List<Issue> search(String query);
 }

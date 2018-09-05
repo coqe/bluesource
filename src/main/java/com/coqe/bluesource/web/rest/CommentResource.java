@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -46,7 +47,7 @@ public class CommentResource {
      */
     @PostMapping("/comments")
     @Timed
-    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) throws URISyntaxException {
+    public ResponseEntity<Comment> createComment(@Valid @RequestBody Comment comment) throws URISyntaxException {
         log.debug("REST request to save Comment : {}", comment);
         if (comment.getId() != null) {
             throw new BadRequestAlertException("A new comment cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,7 +69,7 @@ public class CommentResource {
      */
     @PutMapping("/comments")
     @Timed
-    public ResponseEntity<Comment> updateComment(@RequestBody Comment comment) throws URISyntaxException {
+    public ResponseEntity<Comment> updateComment(@Valid @RequestBody Comment comment) throws URISyntaxException {
         log.debug("REST request to update Comment : {}", comment);
         if (comment.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
