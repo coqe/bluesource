@@ -40,8 +40,8 @@ export class App extends React.Component<IAppProps> {
               isSwaggerEnabled={this.props.isSwaggerEnabled}
             />
           </ErrorBoundary>
-          <div className="container-fluid view-container" id="app-view-container">
-            <Card className="jh-card">
+          <div className="container-fluid view-container padded-container" id="app-view-container">
+            <Card className="jh-card no-padding">
               <ErrorBoundary>
                 <AppRoutes />
               </ErrorBoundary>

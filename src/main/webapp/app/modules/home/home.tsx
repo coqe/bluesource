@@ -22,7 +22,7 @@ export class Home extends React.Component<IHomeProp> {
       return <Redirect to="/login" />;
     }
     return (
-      <Row>
+      <Row className="projects-container">
         <div>
           <hr />
 
