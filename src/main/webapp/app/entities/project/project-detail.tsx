@@ -90,10 +90,6 @@ export class ProjectDetail extends React.Component<IProjectDetailProps> {
             </dd>
             <dt>Repo</dt>
             <dd>{projectEntity.repo ? projectEntity.repo.uri : ''}</dd>
-            <dt>Created By</dt>
-            <dd>{projectEntity.createdBy ? projectEntity.createdBy.id : ''}</dd>
-            <dt>Issue</dt>
-            <dd>{projectEntity.issue ? projectEntity.issue.summary : ''}</dd>
             <dt>Technologies</dt>
             <dd>
               {projectEntity.technologies
@@ -127,6 +123,8 @@ export class ProjectDetail extends React.Component<IProjectDetailProps> {
                   ))
                 : null}
             </dd>
+            <dt>Created By</dt>
+            <dd>{projectEntity.createdBy ? projectEntity.createdBy.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/project" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

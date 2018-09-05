@@ -19,12 +19,6 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "madeBy",
-            "otherEntityName": "userProfile",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
             "relationshipName": "project",
             "otherEntityName": "project",
             "otherEntityField": "name"
@@ -34,6 +28,12 @@
             "relationshipName": "issue",
             "otherEntityName": "issue",
             "otherEntityField": "summary"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "madeBy",
+            "otherEntityName": "userProfile",
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20180905112308",

@@ -45,16 +45,13 @@ relationship OneToOne {
     UserProfile{account(login)} to User{profile}
 }
 
-relationship ManyToOne {
-	Project{createdBy} to UserProfile{create(name)},
-	Comment{madeBy} to UserProfile{make(name)},
-	Issue{createdBy} to UserProfile{raise(name)},
-    Project{issue(summary)} to Issue{project(name)}
-}
-
 relationship OneToMany {
     Project{comment} to Comment{project(name)},
-    Issue{comment} to Comment{issue(summary)}
+    Issue{comment} to Comment{issue(summary)},
+    Project{issue(summary)} to Issue{project(name)},
+    UserProfile{create(name)} to Project{createdBy},
+    UserProfile{make(name)} to Comment{madeBy},
+    UserProfile{raise(name)} to Issue{createdBy}
 }
 
 relationship ManyToMany {

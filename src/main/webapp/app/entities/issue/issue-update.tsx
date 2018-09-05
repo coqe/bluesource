@@ -8,6 +8,8 @@ import { ICrudGetAction, ICrudGetAllAction, setFileData, byteSize, ICrudPutActio
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IProject } from 'app/shared/model/project.model';
+import { getEntities as getProjects } from 'app/entities/project/project.reducer';
 import { IUserProfile } from 'app/shared/model/user-profile.model';
 import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './issue.reducer';
@@ -20,6 +22,7 @@ export interface IIssueUpdateProps extends StateProps, DispatchProps, RouteCompo
 
 export interface IIssueUpdateState {
   isNew: boolean;
+  projectId: number;
   createdById: number;
 }
 
@@ -27,6 +30,7 @@ export class IssueUpdate extends React.Component<IIssueUpdateProps, IIssueUpdate
   constructor(props) {
     super(props);
     this.state = {
+      projectId: 0,
       createdById: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -39,6 +43,7 @@ export class IssueUpdate extends React.Component<IIssueUpdateProps, IIssueUpdate
       this.props.getEntity(this.props.match.params.id);
     }
 
+    this.props.getProjects();
     this.props.getUserProfiles();
   }
 
@@ -72,7 +77,7 @@ export class IssueUpdate extends React.Component<IIssueUpdateProps, IIssueUpdate
   };
 
   render() {
-    const { issueEntity, userProfiles, loading, updating } = this.props;
+    const { issueEntity, projects, userProfiles, loading, updating } = this.props;
     const { isNew } = this.state;
 
     const { fullDescription } = issueEntity;
@@ -131,6 +136,19 @@ export class IssueUpdate extends React.Component<IIssueUpdateProps, IIssueUpdate
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label for="project.name">Project</Label>
+                  <AvInput id="issue-project" type="select" className="form-control" name="project.id">
+                    <option value="" key="0" />
+                    {projects
+                      ? projects.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.name}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
                   <Label for="createdBy.id">Created By</Label>
                   <AvInput id="issue-createdBy" type="select" className="form-control" name="createdBy.id">
                     <option value="" key="0" />
@@ -161,6 +179,7 @@ export class IssueUpdate extends React.Component<IIssueUpdateProps, IIssueUpdate
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  projects: storeState.project.entities,
   userProfiles: storeState.userProfile.entities,
   issueEntity: storeState.issue.entity,
   loading: storeState.issue.loading,
@@ -168,6 +187,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getProjects,
   getUserProfiles,
   getEntity,
   updateEntity,

@@ -79,6 +79,7 @@ export class Issue extends React.Component<IIssueProps, IIssueState> {
                 <th>Full Description</th>
                 <th>Interest</th>
                 <th>Rewards</th>
+                <th>Project</th>
                 <th>Created By</th>
                 <th />
               </tr>
@@ -95,6 +96,7 @@ export class Issue extends React.Component<IIssueProps, IIssueState> {
                   <td>{issue.fullDescription}</td>
                   <td>{issue.interest}</td>
                   <td>{issue.rewards}</td>
+                  <td>{issue.project ? <Link to={`project/${issue.project.id}`}>{issue.project.name}</Link> : ''}</td>
                   <td>{issue.createdBy ? <Link to={`user-profile/${issue.createdBy.id}`}>{issue.createdBy.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

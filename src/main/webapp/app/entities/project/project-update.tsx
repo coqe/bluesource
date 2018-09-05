@@ -10,12 +10,10 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IRepo } from 'app/shared/model/repo.model';
 import { getEntities as getRepos } from 'app/entities/repo/repo.reducer';
-import { IUserProfile } from 'app/shared/model/user-profile.model';
-import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
-import { IIssue } from 'app/shared/model/issue.model';
-import { getEntities as getIssues } from 'app/entities/issue/issue.reducer';
 import { IKeyword } from 'app/shared/model/keyword.model';
 import { getEntities as getKeywords } from 'app/entities/keyword/keyword.reducer';
+import { IUserProfile } from 'app/shared/model/user-profile.model';
+import { getEntities as getUserProfiles } from 'app/entities/user-profile/user-profile.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './project.reducer';
 import { IProject } from 'app/shared/model/project.model';
 // tslint:disable-next-line:no-unused-variable
@@ -26,24 +24,22 @@ export interface IProjectUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export interface IProjectUpdateState {
   isNew: boolean;
+  idstechnologies: any[];
   idscontributor: any[];
   idsadmin: any[];
-  idstechnologies: any[];
   repoId: number;
   createdById: number;
-  issueId: number;
 }
 
 export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProjectUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      idstechnologies: [],
       idscontributor: [],
       idsadmin: [],
-      idstechnologies: [],
       repoId: 0,
       createdById: 0,
-      issueId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -54,9 +50,8 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
     }
 
     this.props.getRepos();
-    this.props.getUserProfiles();
-    this.props.getIssues();
     this.props.getKeywords();
+    this.props.getUserProfiles();
   }
 
   onBlobChange = (isAnImage, name) => event => {
@@ -76,9 +71,9 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
       const entity = {
         ...projectEntity,
         ...values,
+        technologies: mapIdList(values.technologies),
         contributors: mapIdList(values.contributors),
-        admins: mapIdList(values.admins),
-        technologies: mapIdList(values.technologies)
+        admins: mapIdList(values.admins)
       };
 
       if (this.state.isNew) {
@@ -95,7 +90,7 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
   };
 
   render() {
-    const { projectEntity, repos, userProfiles, issues, keywords, loading, updating } = this.props;
+    const { projectEntity, repos, keywords, userProfiles, loading, updating } = this.props;
     const { isNew } = this.state;
 
     const { logo, logoContentType, attachment, attachmentContentType } = projectEntity;
@@ -264,32 +259,6 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="createdBy.id">Created By</Label>
-                  <AvInput id="project-createdBy" type="select" className="form-control" name="createdBy.id">
-                    <option value="" key="0" />
-                    {userProfiles
-                      ? userProfiles.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="issue.summary">Issue</Label>
-                  <AvInput id="project-issue" type="select" className="form-control" name="issue.id">
-                    <option value="" key="0" />
-                    {issues
-                      ? issues.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.summary}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
                   <Label for="keywords">Technologies</Label>
                   <AvInput
                     id="project-technologies"
@@ -349,6 +318,19 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="createdBy.id">Created By</Label>
+                  <AvInput id="project-createdBy" type="select" className="form-control" name="createdBy.id">
+                    <option value="" key="0" />
+                    {userProfiles
+                      ? userProfiles.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/project" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -368,9 +350,8 @@ export class ProjectUpdate extends React.Component<IProjectUpdateProps, IProject
 
 const mapStateToProps = (storeState: IRootState) => ({
   repos: storeState.repo.entities,
-  userProfiles: storeState.userProfile.entities,
-  issues: storeState.issue.entities,
   keywords: storeState.keyword.entities,
+  userProfiles: storeState.userProfile.entities,
   projectEntity: storeState.project.entity,
   loading: storeState.project.loading,
   updating: storeState.project.updating
@@ -378,9 +359,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getRepos,
-  getUserProfiles,
-  getIssues,
   getKeywords,
+  getUserProfiles,
   getEntity,
   updateEntity,
   setBlob,

@@ -1,21 +1,14 @@
 package com.coqe.bluesource.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
-
-import org.springframework.data.elasticsearch.annotations.Document;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A Comment.
@@ -41,16 +34,16 @@ public class Comment implements Serializable {
     private ZonedDateTime createdAt;
 
     @ManyToOne
-    @JsonIgnoreProperties("createds")
-    private UserProfile madeBy;
-
-    @ManyToOne
     @JsonIgnoreProperties("comments")
     private Project project;
 
     @ManyToOne
     @JsonIgnoreProperties("comments")
     private Issue issue;
+
+    @ManyToOne
+    @JsonIgnoreProperties("makes")
+    private UserProfile madeBy;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -87,19 +80,6 @@ public class Comment implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public UserProfile getMadeBy() {
-        return madeBy;
-    }
-
-    public Comment madeBy(UserProfile userProfile) {
-        this.madeBy = userProfile;
-        return this;
-    }
-
-    public void setMadeBy(UserProfile userProfile) {
-        this.madeBy = userProfile;
-    }
-
     public Project getProject() {
         return project;
     }
@@ -124,6 +104,19 @@ public class Comment implements Serializable {
 
     public void setIssue(Issue issue) {
         this.issue = issue;
+    }
+
+    public UserProfile getMadeBy() {
+        return madeBy;
+    }
+
+    public Comment madeBy(UserProfile userProfile) {
+        this.madeBy = userProfile;
+        return this;
+    }
+
+    public void setMadeBy(UserProfile userProfile) {
+        this.madeBy = userProfile;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

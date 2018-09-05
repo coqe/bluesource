@@ -21,14 +21,6 @@
             "otherEntityRelationshipName": "profile"
         },
         {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "user",
-            "relationshipName": "skill",
-            "otherEntityName": "keyword",
-            "otherEntityField": "word",
-            "ownerSide": true
-        },
-        {
             "relationshipType": "one-to-many",
             "relationshipName": "create",
             "otherEntityName": "project",
@@ -45,6 +37,14 @@
             "relationshipName": "raise",
             "otherEntityName": "issue",
             "otherEntityRelationshipName": "createdBy"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "user",
+            "relationshipName": "skill",
+            "otherEntityName": "keyword",
+            "otherEntityField": "word",
+            "ownerSide": true
         },
         {
             "relationshipType": "many-to-many",

@@ -1,6 +1,6 @@
 import { IComment } from 'app/shared/model//comment.model';
-import { IUserProfile } from 'app/shared/model//user-profile.model';
 import { IProject } from 'app/shared/model//project.model';
+import { IUserProfile } from 'app/shared/model//user-profile.model';
 
 export interface IIssue {
   id?: number;
@@ -9,8 +9,8 @@ export interface IIssue {
   interest?: number;
   rewards?: number;
   comments?: IComment[];
+  project?: IProject;
   createdBy?: IUserProfile;
-  projects?: IProject[];
 }
 
 export const defaultValue: Readonly<IIssue> = {};
