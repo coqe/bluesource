@@ -68,7 +68,7 @@ export class Home extends React.Component<IHomeProp> {
           <Progress className="card-languages" multi>
             <Progress bar value="25">Spring</Progress>
             <Progress bar color="success" value="60">React</Progress>
-            <Progress bar color="info" value="15g">Play</Progress>
+            <Progress bar color="info" value="15">Play</Progress>
           </Progress>
 
           <hr />
