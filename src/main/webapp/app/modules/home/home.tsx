@@ -27,18 +27,13 @@ export class Home extends React.Component<IHomeProp> {
   }
 
   componentDidMount() {
-    this.props.getSession();
-    this.props.getEntities();
-  }
-
-  componentWillReceiveProps() {
-    console.log("received")
-    console.log(this.props)
-    if (this.state["receivedProfile"] == false && this.props.userId != undefined) {
-      this.setState({receivedProfile: true})
-      this.props.getEntity(this.props.userId);
+    if (this.props.isAuthenticated) {
+      this.props.getSession();
+      this.props.getEntities();
     }
   }
+
+  componentWillReceiveProps() { }
 
   languages = () => (
     <Progress className="card-languages" multi>
@@ -74,16 +69,6 @@ export class Home extends React.Component<IHomeProp> {
     }
   };
 
-  skills = () => {
-    if (this.props.profile.skills != undefined) {
-      return (
-        this.props.profile.skills.map( (skill, i) => {
-          <h4 key={i}>{skill}</h4>
-        })
-      )
-    }
-  }
-
   render() {
     const { isAuthenticated } = this.props;
     if (!isAuthenticated) {
@@ -96,8 +81,6 @@ export class Home extends React.Component<IHomeProp> {
           {/*{ console.log(this.props.projectList)}*/}
 
           <h4>Welcome back {this.props.account.firstName}!</h4>
-
-          {this.skills()}
 
           <hr />
           <h4>Our Ecosystem</h4>
@@ -175,8 +158,7 @@ const mapStateToProps = storeState => {
     account: storeState.authentication.account,
     userId: storeState.authentication.account.id,
     isAuthenticated: storeState.authentication.isAuthenticated,
-    projectList: storeState.project.entities,
-    profile: storeState.userProfile
+    projectList: storeState.project.entities
   });
 }
 
