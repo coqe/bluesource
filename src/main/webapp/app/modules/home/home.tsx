@@ -24,10 +24,10 @@ export class Home extends React.Component<IHomeProp> {
     return (
       <Row className="projects-container">
         <div>
+          <div>
+          </div>
           <hr />
-
           <h4>Current Projects</h4>
-
           <Table>
             <thead>
               <tr>

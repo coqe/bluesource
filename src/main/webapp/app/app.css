@@ -263,6 +263,7 @@ ui bootstrap tweaks
   padding:20px;
   color:#2E2E2E;
   margin-top:30px;
+  float: left;
 }
 
 .login-option {
@@ -277,4 +278,14 @@ ui bootstrap tweaks
   width:100%;
   margin-top:30px;
   height:50px;
+  display: flex;
+}
+.banner-image {
+  float:left;
+  padding-left:100px;
+  height:500px;
+}
+
+.banner-container {
+  display: flex;
 }
