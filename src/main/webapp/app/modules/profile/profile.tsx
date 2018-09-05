@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Row, Col, Alert, Input, Table, Form, FormGroup, FormText, Label, Button, Container } from 'reactstrap';
 import TagsInput from 'react-tagsinput'
 import AvatarEditor from 'react-avatar-editor'
-import "react-simple-flex-grid/lib/main.css";
+// import "react-simple-flex-grid/lib/main.css";
 import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
 
 import { IRootState } from 'app/shared/reducers';
