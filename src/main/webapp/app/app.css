@@ -311,7 +311,8 @@ ui bootstrap tweaks
 .dot {
   height: 50px;
   width: 50px;
-  background-color: #bbb;
+  background-color: #2e70c8;
+  color:white;
   border-radius: 50%;
   display:inline-block;
   margin-right:5px;
@@ -343,4 +344,28 @@ ui bootstrap tweaks
 .project-explore-button {
   width: 50%;
   margin: 0 25%;
+}
+
+.projects-interest {
+  position:absolute;
+  right:1em;
+  top:1em;
+}
+
+.projects-repo-url {
+  color:#2E70C8;
+  margin:0;
+}
+
+.projects-current-container h5 {
+  margin:0;
+}
+
+.projects-container-inner-skills-tag {
+  float:left;
+  margin-right:.5em;
+}
+
+.badge {
+  margin-right:.25em;
 }

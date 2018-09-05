@@ -48,9 +48,9 @@ export class Home extends React.Component<IHomeProp> {
 
 
   technologies = (skills) => (
-    <div>
+    <div className="skills-container">
       { skills.map((skill,i) =>
-        <Badge key={i} color="info" pill>{skill.word}</Badge>
+        <Badge key={i} color="secondary" pill>{skill.word}</Badge>
       )}
     </div>
   );
@@ -62,13 +62,13 @@ export class Home extends React.Component<IHomeProp> {
           { contributors.map( (contributor, i) => {
             <span className="dot">{contributor}</span>
           })}
-          <span className="dot"><p>+100</p></span>
+          <span className="dot"><p>+n</p></span>
         </div>
       )
     } else {
       return (
         <div className="card-participants">
-          <span className="dot"><p>1</p></span>
+          <span className="dot"><p>0</p></span>
         </div>
       )
     }
@@ -87,7 +87,7 @@ export class Home extends React.Component<IHomeProp> {
 
           <h4>Welcome back {this.props.account.firstName}!</h4>
           <h5>{this.props.profile.role}</h5>
-          { Object.keys(this.props.profile).length > 0 ? this.technologies(this.props.profile.skills) : null }
+          <p className="projects-container-inner-skills-tag">Your skills: </p> { Object.keys(this.props.profile).length > 0 ? this.technologies(this.props.profile.skills) : null }
 
           <hr />
           <h4>Your Projects</h4>
@@ -111,8 +111,9 @@ export class Home extends React.Component<IHomeProp> {
             this.props.projectList.map( (project, i) => (
                 <Card key={i}>
                   <CardBody>
+                    <Badge key={i} color="primary" className={"projects-interest"}>{project.interest}</Badge>
                     <CardTitle>{project.name}</CardTitle>
-                    <CardSubtitle>Card subtitle</CardSubtitle>
+                    <p className={"projects-repo-url"}>{project.repo.uri}</p>
                     {this.technologies([{"word":"spring"},{"word":"react"},{"word":"dashboard"}])}
                     {this.contributors(project.contributors)}
                     <CardText>{project.description}</CardText>
