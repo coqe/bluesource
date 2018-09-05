@@ -10,10 +10,10 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { IKeyword } from 'app/shared/model/keyword.model';
-import { getEntities as getKeywords } from 'app/entities/keyword/keyword.reducer';
 import { IProject } from 'app/shared/model/project.model';
 import { getEntities as getProjects } from 'app/entities/project/project.reducer';
+import { IKeyword } from 'app/shared/model/keyword.model';
+import { getEntities as getKeywords } from 'app/entities/keyword/keyword.reducer';
 import { getEntity, updateEntity, createEntity, setBlob, reset } from './user-profile.reducer';
 import { IUserProfile } from 'app/shared/model/user-profile.model';
 // tslint:disable-next-line:no-unused-variable
@@ -52,8 +52,8 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
     }
 
     this.props.getUsers();
-    this.props.getKeywords();
     this.props.getProjects();
+    this.props.getKeywords();
   }
 
   onBlobChange = (isAnImage, name) => event => {
@@ -87,7 +87,7 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
   };
 
   render() {
-    const { userProfileEntity, users, keywords, projects, loading, updating } = this.props;
+    const { userProfileEntity, users, projects, keywords, loading, updating } = this.props;
     const { isNew } = this.state;
 
     const { avatar, avatarContentType } = userProfileEntity;
@@ -199,8 +199,8 @@ export class UserProfileUpdate extends React.Component<IUserProfileUpdateProps, 
 
 const mapStateToProps = (storeState: IRootState) => ({
   users: storeState.userManagement.users,
-  keywords: storeState.keyword.entities,
   projects: storeState.project.entities,
+  keywords: storeState.keyword.entities,
   userProfileEntity: storeState.userProfile.entity,
   loading: storeState.userProfile.loading,
   updating: storeState.userProfile.updating
@@ -208,8 +208,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getUsers,
-  getKeywords,
   getProjects,
+  getKeywords,
   getEntity,
   updateEntity,
   setBlob,

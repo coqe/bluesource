@@ -1,14 +1,26 @@
 package com.coqe.bluesource.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
+
+import org.springframework.data.elasticsearch.annotations.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A UserProfile.
@@ -39,12 +51,6 @@ public class UserProfile implements Serializable {
     @JoinColumn(unique = true)
     private User account;
 
-    @ManyToMany
-    @JoinTable(name = "user_profile_skill",
-               joinColumns = @JoinColumn(name = "user_profiles_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "skills_id", referencedColumnName = "id"))
-    private Set<Keyword> skills = new HashSet<>();
-
     @OneToMany(mappedBy = "createdBy")
     private Set<Project> creates = new HashSet<>();
 
@@ -53,6 +59,12 @@ public class UserProfile implements Serializable {
 
     @OneToMany(mappedBy = "createdBy")
     private Set<Issue> raises = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "user_profile_skill",
+               joinColumns = @JoinColumn(name = "user_profiles_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "skills_id", referencedColumnName = "id"))
+    private Set<Keyword> skills = new HashSet<>();
 
     @ManyToMany(mappedBy = "contributors")
     @JsonIgnore
@@ -121,31 +133,6 @@ public class UserProfile implements Serializable {
 
     public void setAccount(User user) {
         this.account = user;
-    }
-
-    public Set<Keyword> getSkills() {
-        return skills;
-    }
-
-    public UserProfile skills(Set<Keyword> keywords) {
-        this.skills = keywords;
-        return this;
-    }
-
-    public UserProfile addSkill(Keyword keyword) {
-        this.skills.add(keyword);
-        keyword.getUsers().add(this);
-        return this;
-    }
-
-    public UserProfile removeSkill(Keyword keyword) {
-        this.skills.remove(keyword);
-        keyword.getUsers().remove(this);
-        return this;
-    }
-
-    public void setSkills(Set<Keyword> keywords) {
-        this.skills = keywords;
     }
 
     public Set<Project> getCreates() {
@@ -221,6 +208,31 @@ public class UserProfile implements Serializable {
 
     public void setRaises(Set<Issue> issues) {
         this.raises = issues;
+    }
+
+    public Set<Keyword> getSkills() {
+        return skills;
+    }
+
+    public UserProfile skills(Set<Keyword> keywords) {
+        this.skills = keywords;
+        return this;
+    }
+
+    public UserProfile addSkill(Keyword keyword) {
+        this.skills.add(keyword);
+        keyword.getUsers().add(this);
+        return this;
+    }
+
+    public UserProfile removeSkill(Keyword keyword) {
+        this.skills.remove(keyword);
+        keyword.getUsers().remove(this);
+        return this;
+    }
+
+    public void setSkills(Set<Keyword> keywords) {
+        this.skills = keywords;
     }
 
     public Set<Project> getProjects() {

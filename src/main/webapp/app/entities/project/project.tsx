@@ -157,9 +157,6 @@ export class Project extends React.Component<IProjectProps, IProjectState> {
                   <th>
                     Created By <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th>
-                    Issue <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th />
                 </tr>
               </thead>
@@ -207,7 +204,6 @@ export class Project extends React.Component<IProjectProps, IProjectState> {
                     </td>
                     <td>{project.repo ? <Link to={`repo/${project.repo.id}`}>{project.repo.uri}</Link> : ''}</td>
                     <td>{project.createdBy ? <Link to={`user-profile/${project.createdBy.id}`}>{project.createdBy.id}</Link> : ''}</td>
-                    <td>{project.issue ? <Link to={`issue/${project.issue.id}`}>{project.issue.summary}</Link> : ''}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${project.id}`} color="info" size="sm">

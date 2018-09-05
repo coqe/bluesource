@@ -14,18 +14,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="repo"/>
 
-        <addForeignKeyConstraint baseColumnNames="created_by_id"
-                                 baseTableName="project"
-                                 constraintName="fk_project_created_by_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="user_profile"/>
-
-        <addForeignKeyConstraint baseColumnNames="issue_id"
-                                 baseTableName="project"
-                                 constraintName="fk_project_issue_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="issue"/>
-
         <addForeignKeyConstraint baseColumnNames="projects_id"
                                  baseTableName="project_technologies"
                                  constraintName="fk_project_technologies_projects_id"
@@ -59,5 +47,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="user_profile"/>
         
+        <addForeignKeyConstraint baseColumnNames="created_by_id"
+                                 baseTableName="project"
+                                 constraintName="fk_project_created_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_profile"/>
+
     </changeSet>
 </databaseChangeLog>

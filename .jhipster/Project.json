@@ -63,16 +63,10 @@
             "otherEntityRelationshipName": "project"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "createdBy",
-            "otherEntityName": "userProfile",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
+            "relationshipType": "one-to-many",
             "relationshipName": "issue",
             "otherEntityName": "issue",
-            "otherEntityField": "summary"
+            "otherEntityRelationshipName": "project"
         },
         {
             "relationshipType": "many-to-many",
@@ -97,6 +91,12 @@
             "otherEntityName": "userProfile",
             "otherEntityField": "id",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "createdBy",
+            "otherEntityName": "userProfile",
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20180905112307",

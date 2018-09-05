@@ -46,11 +46,12 @@ public class Issue implements Serializable {
     private Set<Comment> comments = new HashSet<>();
 
     @ManyToOne
+    @JsonIgnoreProperties("issues")
+    private Project project;
+
+    @ManyToOne
     @JsonIgnoreProperties("raises")
     private UserProfile createdBy;
-
-    @OneToMany(mappedBy = "issue")
-    private Set<Project> projects = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -138,6 +139,19 @@ public class Issue implements Serializable {
         this.comments = comments;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public Issue project(Project project) {
+        this.project = project;
+        return this;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
     public UserProfile getCreatedBy() {
         return createdBy;
     }
@@ -149,31 +163,6 @@ public class Issue implements Serializable {
 
     public void setCreatedBy(UserProfile userProfile) {
         this.createdBy = userProfile;
-    }
-
-    public Set<Project> getProjects() {
-        return projects;
-    }
-
-    public Issue projects(Set<Project> projects) {
-        this.projects = projects;
-        return this;
-    }
-
-    public Issue addProject(Project project) {
-        this.projects.add(project);
-        project.setIssue(this);
-        return this;
-    }
-
-    public Issue removeProject(Project project) {
-        this.projects.remove(project);
-        project.setIssue(null);
-        return this;
-    }
-
-    public void setProjects(Set<Project> projects) {
-        this.projects = projects;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
