@@ -60,6 +60,12 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
             </FormGroup>
 
             <FormGroup>
+              <Label for="sector">Business Sector</Label>
+              <Input type="sector" name="sector" id="sector" placeholder="e.g. FXIP" />
+            </FormGroup>
+
+
+            <FormGroup>
               <Label for="projectDescription">Project Description</Label>
               <Input type="textarea" name="text" id="exampleText" />
             </FormGroup>
