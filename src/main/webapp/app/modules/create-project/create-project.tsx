@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { Row, Col, Alert, Input, Table, Form, FormGroup, FormText, Label, Button } from 'reactstrap';
+import { Row, Col, Alert, Input, Table, Form, FormGroup, FormText, Label, Button, Container } from 'reactstrap';
 
 import TagsInput from 'react-tagsinput'
 import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
@@ -33,11 +33,11 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
     this.props.getSession();
   }
 
-  handleChange(tags) {
+  handleTagChange(tags) {
     this.setState({tags})
   }
 
-  handleChange(date) {
+  handleDateChange(date) {
     this.setState({
       startDate: date
     });
@@ -46,9 +46,8 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
   render() {
     const { account } = this.props;
     return (
-      <Row>
-        <div>
-
+      <div>
+        <Container>
           <h4>Create a Project</h4>
 
           <hr/>
@@ -73,7 +72,7 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
               <Label for="dateNeeded">Date Needed (Optional)</Label>
               <DatePicker
                 selected={this.state.startDate}
-                onChange={this.handleChange}
+                onChange={this.handleDateChange}
               />
             </FormGroup>
             <FormGroup>
@@ -93,9 +92,8 @@ export class CreateProject extends React.Component<ICreateProjectProp> {
 
             <Button>Submit</Button>
           </Form>
-
-        </div>
-      </Row>
+        </Container>
+      </div>
     );
   }
 }
