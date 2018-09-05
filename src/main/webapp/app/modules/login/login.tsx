@@ -23,6 +23,21 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
     }
   }
 
+  banner = () => (
+    <div className="home-banner position-relative">
+      <h1>{"<"}Dont write code without it{" />"}</h1>
+      <div className="banner-container">
+        <LoginModal
+          // showModal={showModal}
+          handleLogin={this.handleLogin}
+          handleClose={this.handleClose}
+          loginError={this.props.loginError}
+        />
+        <img src="content/images/bottle.png" className="banner-image" alt="Logo" />
+      </div>
+    </div>
+  );
+
   handleLogin = (username, password, rememberMe = false) => {
     this.props.login(username, password, rememberMe);
   };
@@ -39,7 +54,9 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
       return <Redirect to={from} />;
     }
     return (
-      <LoginModal showModal={showModal} handleLogin={this.handleLogin} handleClose={this.handleClose} loginError={this.props.loginError} />
+      <div>
+        {this.banner()}
+      </div>
     );
   }
 }
