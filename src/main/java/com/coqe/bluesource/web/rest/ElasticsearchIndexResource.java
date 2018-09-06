@@ -1,5 +1,7 @@
 package com.coqe.bluesource.web.rest;
 
+import javax.annotation.PostConstruct;
+
 import com.codahale.metrics.annotation.Timed;
 import com.coqe.bluesource.security.AuthoritiesConstants;
 import com.coqe.bluesource.security.SecurityUtils;
@@ -36,6 +38,7 @@ public class ElasticsearchIndexResource {
     @PostMapping("/elasticsearch/index")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
+    @PostConstruct
     public ResponseEntity<Void> reindexAll() throws URISyntaxException {
         log.info("REST request to reindex Elasticsearch by user : {}", SecurityUtils.getCurrentUserLogin());
         elasticsearchIndexService.reindexAll();

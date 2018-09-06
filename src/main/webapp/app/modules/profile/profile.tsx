@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row, Col, Alert, Input, Table, Form, FormGroup, FormText, Label, Button, Container } from 'reactstrap';
 import TagsInput from 'react-tagsinput'
-import AvatarEditor from 'react-avatar-editor'
+// import AvatarEditor from 'react-avatar-editor'
 // import "react-simple-flex-grid/lib/main.css";
 import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
 
@@ -66,15 +66,15 @@ export class Profile extends React.Component<IProfileProp, MyState> {
   <Col xl={4}>
           <Form>
             <FormGroup>
-              <AvatarEditor
-                image="../../../content/images/hipster192.png"
-                width={150}
-                height={150}
-                border={0}
-                color={[255, 255, 255, 0.6]} // RGBA
-                scale={1.0}
-                rotate={0}
-              />
+              {/*<AvatarEditor*/}
+                {/*image="../../../content/images/hipster192.png"*/}
+                {/*width={150}*/}
+                {/*height={150}*/}
+                {/*border={0}*/}
+                {/*color={[255, 255, 255, 0.6]} // RGBA*/}
+                {/*scale={1.0}*/}
+                {/*rotate={0}*/}
+              {/*/>*/}
             </FormGroup>
             <FormGroup>
               <Input type="file" name="file" id="exampleFile" />
