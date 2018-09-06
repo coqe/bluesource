@@ -83,9 +83,13 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
         <LoadingBar className="loading-bar" />
         <Navbar dark expand="sm" fixed="top" className="jh-navbar">
           <NavbarToggler aria-label="Menu" onClick={this.toggleMenu} />
-          <Brand />
 
-          <Input type="text" value={this.state.searchValue} onChange={this.handleChange} placeholder="search for a project" />
+          <div className="header-logo-text-container">
+            <Brand />
+            <h2 className="header-logo-text">Blue Source</h2>
+          </div>
+
+          <Input type="text" value={this.state.searchValue} onChange={this.handleChange} placeholder="search for a project" className="header-search-bar"/>
 
           <Collapse isOpen={this.state.menuOpen} navbar>
             <Nav id="header-tabs" className="ml-auto" navbar>

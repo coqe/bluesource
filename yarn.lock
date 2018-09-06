@@ -8034,6 +8034,12 @@ react-addons-transition-group@16.0.0-alpha.3:
     fbjs "^0.8.9"
     object-assign "^4.1.0"
 
+react-avatar-editor@latest:
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/react-avatar-editor/-/react-avatar-editor-11.0.4.tgz#a32e2e10f1edc8480b1b852f3ab287c7b56c7ced"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-autosuggest@^9.4.0:
   version "9.4.0"
   resolved "https://registry.yarnpkg.com/react-autosuggest/-/react-autosuggest-9.4.0.tgz#3146bc9afa4f171bed067c542421edec5ca94294"

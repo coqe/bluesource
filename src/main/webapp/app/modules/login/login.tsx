@@ -26,6 +26,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
   banner = () => (
     <div className="home-banner position-relative">
       <h1>{"<"}Dont write code without it{" />"}</h1>
+      <h4>Central hub for inner sourcing and collaboration. Building One community.</h4>
       <div className="banner-container">
         <LoginModal
           // showModal={showModal}
@@ -33,7 +34,9 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
           handleClose={this.handleClose}
           loginError={this.props.loginError}
         />
-        <img src="content/images/bottle.png" className="banner-image" alt="Logo" />
+        <div className="banner-image-container">
+          <img src="content/images/worldmap_svg.svg" className="banner-image" alt="Logo" />
+        </div>
       </div>
     </div>
   );
@@ -50,8 +53,9 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
     const { location, isAuthenticated } = this.props;
     const { from } = location.state || { from: { pathname: '/', search: location.search } };
     const { showModal } = this.state;
+
     if (isAuthenticated) {
-      return <Redirect to={from} />;
+      return <Redirect to="/home" />
     }
     return (
       <div>
