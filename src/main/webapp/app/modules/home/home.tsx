@@ -59,8 +59,9 @@ export class Home extends React.Component<IHomeProp> {
   )
 
 
-  technologies = (skills) => (
+  technologies = (skills, text = "") => (
     <div className="skills-container">
+      { text ? <p className="projects-container-inner-skills-tag">{text}</p> : null }
       { skills.map((skill,i) =>
         <Badge key={i} color="secondary" pill>{skill.word}</Badge>
       )}
@@ -109,8 +110,8 @@ export class Home extends React.Component<IHomeProp> {
         <div className="projects-container-inner">
 
           <h4>Welcome back {this.props.account.firstName}!</h4>
-          <h5>{this.props.profile.role}</h5>
-          <p className="projects-container-inner-skills-tag">Your skills: </p> { Object.keys(this.props.profile).length > 0 ? this.technologies(this.props.profile.skills) : null }
+          <p><b>Role:</b> {this.props.profile.role}</p>
+          { Object.keys(this.props.profile).length > 0 ? this.technologies(this.props.profile.skills, "Your Skills: ") : null }
 
           <hr />
           <h4>Your Projects</h4>
