@@ -14,7 +14,7 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Repo.
+        Added the entity ExternalRepo.
     -->
     <changeSet id="20180905112310-1" author="jhipster">
         <createTable tableName="repo">

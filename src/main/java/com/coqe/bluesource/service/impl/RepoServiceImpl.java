@@ -1,25 +1,24 @@
 package com.coqe.bluesource.service.impl;
 
-import com.coqe.bluesource.service.RepoService;
-import com.coqe.bluesource.domain.Repo;
-import com.coqe.bluesource.repository.RepoRepository;
-import com.coqe.bluesource.repository.search.RepoSearchRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.coqe.bluesource.domain.Repo;
+import com.coqe.bluesource.repository.RepoRepository;
+import com.coqe.bluesource.repository.search.RepoSearchRepository;
+import com.coqe.bluesource.service.RepoService;
 
 /**
- * Service Implementation for managing Repo.
+ * Service Implementation for managing ExternalRepo.
  */
 @Service
 @Transactional
@@ -44,8 +43,12 @@ public class RepoServiceImpl implements RepoService {
      */
     @Override
     public Repo save(Repo repo) {
-        log.debug("Request to save Repo : {}", repo);        Repo result = repoRepository.save(repo);
+        log.debug("Request to save ExternalRepo : {}", repo);        Repo result = repoRepository.save(repo);
+        
+        
         repoSearchRepository.save(result);
+        
+        
         return result;
     }
 
@@ -85,7 +88,7 @@ public class RepoServiceImpl implements RepoService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Repo> findOne(Long id) {
-        log.debug("Request to get Repo : {}", id);
+        log.debug("Request to get ExternalRepo : {}", id);
         return repoRepository.findById(id);
     }
 
@@ -96,7 +99,7 @@ public class RepoServiceImpl implements RepoService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Repo : {}", id);
+        log.debug("Request to delete ExternalRepo : {}", id);
         repoRepository.deleteById(id);
         repoSearchRepository.deleteById(id);
     }

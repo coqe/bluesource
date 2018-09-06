@@ -112,19 +112,19 @@ public class RepoResourceIntTest {
     public void createRepo() throws Exception {
         int databaseSizeBeforeCreate = repoRepository.findAll().size();
 
-        // Create the Repo
+        // Create the ExternalRepo
         restRepoMockMvc.perform(post("/api/repos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(repo)))
             .andExpect(status().isCreated());
 
-        // Validate the Repo in the database
+        // Validate the ExternalRepo in the database
         List<Repo> repoList = repoRepository.findAll();
         assertThat(repoList).hasSize(databaseSizeBeforeCreate + 1);
         Repo testRepo = repoList.get(repoList.size() - 1);
         assertThat(testRepo.getUri()).isEqualTo(DEFAULT_URI);
 
-        // Validate the Repo in Elasticsearch
+        // Validate the ExternalRepo in Elasticsearch
         verify(mockRepoSearchRepository, times(1)).save(testRepo);
     }
 
@@ -133,7 +133,7 @@ public class RepoResourceIntTest {
     public void createRepoWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = repoRepository.findAll().size();
 
-        // Create the Repo with an existing ID
+        // Create the ExternalRepo with an existing ID
         repo.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -142,11 +142,11 @@ public class RepoResourceIntTest {
             .content(TestUtil.convertObjectToJsonBytes(repo)))
             .andExpect(status().isBadRequest());
 
-        // Validate the Repo in the database
+        // Validate the ExternalRepo in the database
         List<Repo> repoList = repoRepository.findAll();
         assertThat(repoList).hasSize(databaseSizeBeforeCreate);
 
-        // Validate the Repo in Elasticsearch
+        // Validate the ExternalRepo in Elasticsearch
         verify(mockRepoSearchRepository, times(0)).save(repo);
     }
 
@@ -157,7 +157,7 @@ public class RepoResourceIntTest {
         // set the field null
         repo.setUri(null);
 
-        // Create the Repo, which fails.
+        // Create the ExternalRepo, which fails.
 
         restRepoMockMvc.perform(post("/api/repos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -226,13 +226,13 @@ public class RepoResourceIntTest {
             .content(TestUtil.convertObjectToJsonBytes(updatedRepo)))
             .andExpect(status().isOk());
 
-        // Validate the Repo in the database
+        // Validate the ExternalRepo in the database
         List<Repo> repoList = repoRepository.findAll();
         assertThat(repoList).hasSize(databaseSizeBeforeUpdate);
         Repo testRepo = repoList.get(repoList.size() - 1);
         assertThat(testRepo.getUri()).isEqualTo(UPDATED_URI);
 
-        // Validate the Repo in Elasticsearch
+        // Validate the ExternalRepo in Elasticsearch
         verify(mockRepoSearchRepository, times(1)).save(testRepo);
     }
 
@@ -241,7 +241,7 @@ public class RepoResourceIntTest {
     public void updateNonExistingRepo() throws Exception {
         int databaseSizeBeforeUpdate = repoRepository.findAll().size();
 
-        // Create the Repo
+        // Create the ExternalRepo
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restRepoMockMvc.perform(put("/api/repos")
@@ -249,11 +249,11 @@ public class RepoResourceIntTest {
             .content(TestUtil.convertObjectToJsonBytes(repo)))
             .andExpect(status().isBadRequest());
 
-        // Validate the Repo in the database
+        // Validate the ExternalRepo in the database
         List<Repo> repoList = repoRepository.findAll();
         assertThat(repoList).hasSize(databaseSizeBeforeUpdate);
 
-        // Validate the Repo in Elasticsearch
+        // Validate the ExternalRepo in Elasticsearch
         verify(mockRepoSearchRepository, times(0)).save(repo);
     }
 
@@ -274,7 +274,7 @@ public class RepoResourceIntTest {
         List<Repo> repoList = repoRepository.findAll();
         assertThat(repoList).hasSize(databaseSizeBeforeDelete - 1);
 
-        // Validate the Repo in Elasticsearch
+        // Validate the ExternalRepo in Elasticsearch
         verify(mockRepoSearchRepository, times(1)).deleteById(repo.getId());
     }
 

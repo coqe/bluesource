@@ -3,5 +3,5 @@ package com.coqe.bluesource.repomanager;
 import java.util.Map;
 
 public interface Organization {
-    Map<String, ? extends Repo> repos();
+    Map<String, ? extends ExternalRepo> repos();
 }
