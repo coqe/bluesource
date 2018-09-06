@@ -45,9 +45,8 @@ export class Home extends React.Component<IHomeProp> {
           <Card key={i}>
             <CardBody>
               <h6 className="projects-interest">Interest <Badge color="secondary">{project.interest}</Badge></h6>
-              {/*<Badge key={i} color="primary" className={"projects-interest"} alt="Interest score">Interest: {project.interest}</Badge>*/}
               <CardTitle>{project.name}</CardTitle>
-              <a href={project.repo.uri} target="_blank" className="projects-repo-url">{project.repo.uri}</a>
+              <a href={project.repo.uri} target="_blank" className="projects-repo-url">{project.repo ? project.repo.uri : null}</a>
               {this.technologies(project.technologies)}
               {this.contributors(project.contributors)}
               <CardText>{project.description}</CardText>
