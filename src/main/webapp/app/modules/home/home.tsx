@@ -38,13 +38,25 @@ export class Home extends React.Component<IHomeProp> {
 
   componentWillReceiveProps() { }
 
-  languages = () => (
-    <Progress className="card-languages" multi>
-      <Progress bar value="50">Java</Progress>
-      <Progress bar color="success" value="30">Javascript</Progress>
-      <Progress bar color="info" value="20">Typescript</Progress>
-    </Progress>
-  );
+  listProjects = (projects) => (
+    <CardColumns className="projects-current-container">
+      {
+        projects.map( (project, i) => (
+          <Card key={i}>
+            <CardBody>
+              <Badge key={i} color="primary" className={"projects-interest"} alt="Interest score">{project.interest}</Badge>
+              <CardTitle>{project.name}</CardTitle>
+              <a href={project.repo.uri} target="_blank" className="projects-repo-url">{project.repo.uri}</a>
+              {this.technologies(project.technologies)}
+              {this.contributors(project.contributors)}
+              <CardText>{project.description}</CardText>
+              <Button className="project-explore-button">Explore</Button>
+            </CardBody>
+          </Card>
+        ))
+      }
+    </CardColumns>
+  )
 
 
   technologies = (skills) => (
@@ -59,10 +71,13 @@ export class Home extends React.Component<IHomeProp> {
     if (contributors != null) {
       return (
         <div className="card-participants">
-          { contributors.map( (contributor, i) => {
-            <span className="dot">{contributor}</span>
-          })}
-          <span className="dot"><p>+n</p></span>
+          { contributors.map( (contributor, i) =>
+            <span className="dot">
+              <p>
+                {contributor.account.firstName.charAt(0).toUpperCase()}{contributor.account.lastName.charAt(0).toUpperCase()}
+              </p>
+              </span>
+          )}
         </div>
       )
     } else {
@@ -81,6 +96,14 @@ export class Home extends React.Component<IHomeProp> {
       return <Redirect to="/login" />;
     }
 
+    // front end filtering :/
+    const userProjects = this.props.projectList.filter( (project) => {
+      return project.contributors.filter((contributor) => {
+        return contributor.id == this.props.userId
+      }).length > 0
+    });
+
+
     return (
       <Row className="projects-container">
         <div className="projects-container-inner">
@@ -91,12 +114,7 @@ export class Home extends React.Component<IHomeProp> {
 
           <hr />
           <h4>Your Projects</h4>
-          {
-            this.props.projectList.filter((project) => {
-              return project.contributors != null
-                && project.contributors.filter((con) => con.id == this.props.account.id).length > 0;
-            })
-          }
+          {this.listProjects(userProjects)}
 
           <hr />
           <h4>Recommended Projects</h4>
@@ -104,24 +122,7 @@ export class Home extends React.Component<IHomeProp> {
           <hr />
           <h4>Latest Projects</h4>
           <h5>{this.props.projectList.length} Result(s)</h5>
-
-          <CardColumns className="projects-current-container">
-          {
-            this.props.projectList.map( (project, i) => (
-                <Card key={i}>
-                  <CardBody>
-                    <Badge key={i} color="primary" className={"projects-interest"} alt="Interest score">{project.interest}</Badge>
-                    <CardTitle>{project.name}</CardTitle>
-                    <a href={project.repo.uri} target="_blank" className="projects-repo-url">{project.repo.uri}</a>
-                    {this.technologies([{"word":"spring"},{"word":"react"},{"word":"dashboard"}])}
-                    {this.contributors(project.contributors)}
-                    <CardText>{project.description}</CardText>
-                    <Button className="project-explore-button">Explore</Button>
-                  </CardBody>
-                </Card>
-            ))
-          }
-          </CardColumns>
+          {this.listProjects(this.props.projectList)}
 
         </div>
       </Row>
