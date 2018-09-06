@@ -380,3 +380,13 @@ ui bootstrap tweaks
 .projects-interest {
   float:right;
 }
+
+.search-modal {
+  max-width:85%;
+}
+
+.modal-search-bar {
+  font-size:4em;
+  width:100%;
+  padding:1em;
+}

@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A Repo.
+ * A ExternalRepo.
  */
 @Entity
 @Table(name = "repo")
@@ -90,7 +90,7 @@ public class Repo implements Serializable {
 
     @Override
     public String toString() {
-        return "Repo{" +
+        return "ExternalRepo{" +
             "id=" + getId() +
             ", uri='" + getUri() + "'" +
             "}";

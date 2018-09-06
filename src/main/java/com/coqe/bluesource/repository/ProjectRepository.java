@@ -30,7 +30,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("select project from Project project left join fetch project.technologies left join fetch project.contributors left join fetch project.admins where project.id =:id")
     Optional<Project> findOneWithEagerRelationships(@Param("id") Long id);
     
-    @Query(value = "select distinct p from Project p join p.technologies t where t.id in :skillIds group by t.id order by count(t.id)")
-    List<Project> findAllByUsersSkills(Set<Long> skillIds);
+    @Query(value = "select distinct p, count(t.id)  from Project p join p.technologies t where t.id in :skillIds group by t.id order by count(t.id)")
+    List<Project> findAllByUsersSkills(@Param("skillIds") Set<Long> skillIds);
 
 }

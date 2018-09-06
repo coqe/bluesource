@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 /**
- * Spring Data  repository for the Repo entity.
+ * Spring Data  repository for the ExternalRepo entity.
  */
 @SuppressWarnings("unused")
 @Repository

@@ -25,7 +25,7 @@ public class GitHubOrganization implements Organization {
     }
     
     @Override
-    public Map<String, ? extends Repo> repos() {
+    public Map<String, ? extends ExternalRepo> repos() {
         try {
             final Map<String, GHRepository> repositories = organization.getRepositories();
             return repositories.values().stream().map(GitHubRepo::new).collect(Collectors.toMap(e -> e.get().getName(), e -> e));

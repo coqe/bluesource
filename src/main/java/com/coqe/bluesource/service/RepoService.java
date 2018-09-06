@@ -1,12 +1,12 @@
 package com.coqe.bluesource.service;
 
-import com.coqe.bluesource.domain.Repo;
-
 import java.util.List;
 import java.util.Optional;
 
+import com.coqe.bluesource.domain.Repo;
+
 /**
- * Service Interface for managing Repo.
+ * Service Interface for managing ExternalRepo.
  */
 public interface RepoService {
 

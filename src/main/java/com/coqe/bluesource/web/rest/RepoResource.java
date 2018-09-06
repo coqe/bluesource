@@ -1,28 +1,34 @@
 package com.coqe.bluesource.web.rest;
 
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import io.github.jhipster.web.util.ResponseUtil;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.codahale.metrics.annotation.Timed;
 import com.coqe.bluesource.domain.Repo;
 import com.coqe.bluesource.service.RepoService;
 import com.coqe.bluesource.web.rest.errors.BadRequestAlertException;
 import com.coqe.bluesource.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * REST controller for managing Repo.
+ * REST controller for managing ExternalRepo.
  */
 @RestController
 @RequestMapping("/api")
@@ -48,7 +54,7 @@ public class RepoResource {
     @PostMapping("/repos")
     @Timed
     public ResponseEntity<Repo> createRepo(@Valid @RequestBody Repo repo) throws URISyntaxException {
-        log.debug("REST request to save Repo : {}", repo);
+        log.debug("REST request to save ExternalRepo : {}", repo);
         if (repo.getId() != null) {
             throw new BadRequestAlertException("A new repo cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -70,7 +76,7 @@ public class RepoResource {
     @PutMapping("/repos")
     @Timed
     public ResponseEntity<Repo> updateRepo(@Valid @RequestBody Repo repo) throws URISyntaxException {
-        log.debug("REST request to update Repo : {}", repo);
+        log.debug("REST request to update ExternalRepo : {}", repo);
         if (repo.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -106,7 +112,7 @@ public class RepoResource {
     @GetMapping("/repos/{id}")
     @Timed
     public ResponseEntity<Repo> getRepo(@PathVariable Long id) {
-        log.debug("REST request to get Repo : {}", id);
+        log.debug("REST request to get ExternalRepo : {}", id);
         Optional<Repo> repo = repoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(repo);
     }
@@ -120,7 +126,7 @@ public class RepoResource {
     @DeleteMapping("/repos/{id}")
     @Timed
     public ResponseEntity<Void> deleteRepo(@PathVariable Long id) {
-        log.debug("REST request to delete Repo : {}", id);
+        log.debug("REST request to delete ExternalRepo : {}", id);
         repoService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

@@ -1,8 +1,11 @@
 package com.coqe.bluesource.repomanager;
 
-import org.kohsuke.github.GHRepository;
+import java.io.IOException;
 
-public class GitHubRepo implements Repo<GHRepository> {
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
+
+public class GitHubRepo implements ExternalRepo<GHRepository> {
     
     private final GHRepository repository;
     
@@ -14,4 +17,15 @@ public class GitHubRepo implements Repo<GHRepository> {
     public GHRepository get() {
         return repository;
     }
+    
+    public static ExternalRepo<GHRepository> findRepo(String fullPath) {
+        try {
+            GitHub github = GitHub.connect();
+            String orgPath = fullPath.replace("https://github.com/","");
+            return new GitHubRepo(github.getRepository(orgPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
 }

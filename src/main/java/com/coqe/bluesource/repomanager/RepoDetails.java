@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.google.common.base.Joiner;
 
-public interface RepoDetails<T extends Repo> {
+public interface RepoDetails<T extends ExternalRepo> {
     
     Joiner JOINER = Joiner.on(",").useForNull("");
     

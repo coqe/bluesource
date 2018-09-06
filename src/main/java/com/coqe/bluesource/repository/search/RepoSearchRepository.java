@@ -4,7 +4,7 @@ import com.coqe.bluesource.domain.Repo;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
- * Spring Data Elasticsearch repository for the Repo entity.
+ * Spring Data Elasticsearch repository for the ExternalRepo entity.
  */
 public interface RepoSearchRepository extends ElasticsearchRepository<Repo, Long> {
 }
