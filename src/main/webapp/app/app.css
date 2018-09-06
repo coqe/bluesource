@@ -245,7 +245,7 @@ ui bootstrap tweaks
 }
 .home-banner {
   width: 100%;
-  height: 100vh;
+  /*height: 100vh;*/
   background-image: linear-gradient(#2c5ea2, #2e70c8);
   padding: 5% 10%;
   margin: 0;
@@ -258,11 +258,10 @@ ui bootstrap tweaks
 
 .login-container {
   /*padding-top:50px;!**!*/
-  width:40%;
+  width:25%;
   background:#F7F8F9;
   padding:20px;
   color:#2E2E2E;
-  margin-top:30px;
   float: left;
 }
 
@@ -280,14 +279,27 @@ ui bootstrap tweaks
   height:50px;
   display: flex;
 }
-.banner-image {
-  float:left;
-  padding-left:100px;
-  height:500px;
-}
 
 .banner-container {
-  display: flex;
+  display: inline-block;
+  width: 100%;
+  position:relative;
+  margin-top:1em;
+}
+
+.banner-image-container {
+  height: 100%;
+  width: 70%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding-top:1em;
+}
+
+.banner-image {
+  width: 100%;
+  max-height: 100%;
+  fill: green;
 }
 
 .search-project-container {
@@ -300,7 +312,8 @@ ui bootstrap tweaks
 .dot {
   height: 50px;
   width: 50px;
-  background-color: #bbb;
+  background-color: #2e70c8;
+  color:white;
   border-radius: 50%;
   display:inline-block;
   margin-right:5px;
@@ -320,6 +333,9 @@ ui bootstrap tweaks
   overflow:auto;
 }
 
+.projects-container-inner {
+  width:100%;
+}
 .projects-current-container {
   max-height:400px;
   width:100%;
@@ -327,6 +343,40 @@ ui bootstrap tweaks
 }
 
 .project-explore-button {
-  margin: 0 25%;
   width: 50%;
+  margin: 0 25%;
+}
+
+.projects-interest {
+  position:absolute;
+  right:1em;
+  top:1em;
+}
+
+.projects-repo-url {
+  color:#2E70C8;
+  margin:0;
+  font-weight:normal;
+}
+.projects-repo-url:hover {
+  font-weight:normal;
+  color:#2E70C8;
+  text-decoration: underline;
+}
+
+.projects-current-container h5 {
+  margin:0;
+}
+
+.projects-container-inner-skills-tag {
+  float:left;
+  margin-right:.5em;
+}
+
+.badge {
+  margin-right:.25em;
+}
+
+.projects-interest {
+  float:right;
 }

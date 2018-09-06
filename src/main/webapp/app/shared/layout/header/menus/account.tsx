@@ -7,6 +7,9 @@ import { NavDropdown } from '../header-components';
 
 const accountMenuItemsAuthenticated = (
   <>
+    <DropdownItem tag={Link} to="/profile/profile">
+      <FontAwesomeIcon icon="wrench" /> Profile
+    </DropdownItem>
     <DropdownItem tag={Link} to="/account/settings">
       <FontAwesomeIcon icon="wrench" /> Settings
     </DropdownItem>

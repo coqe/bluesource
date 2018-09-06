@@ -139,10 +139,12 @@ export const getSearchEntities: ICrudSearchAction<IProject> = query => ({
 });
 
 export const getEntities: ICrudGetAllAction<IProject> = (page, size, sort) => {
+  const eagerLoad = true
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  console.log(requestUrl)
   return {
     type: ACTION_TYPES.FETCH_PROJECT_LIST,
-    payload: axios.get<IProject>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`)
+    payload: axios.get<IProject>(`${requestUrl}${sort ? '&' : '?'}eagerload=true&cacheBuster=${new Date().getTime()}`)
   };
 };
 

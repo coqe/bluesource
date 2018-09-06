@@ -1,11 +1,12 @@
 import './header.css';
 
 import React from 'react';
+import axios from 'axios';
 
 import { Navbar, Nav, NavbarToggler, NavbarBrand, Collapse, Input } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { NavLink as Link } from 'react-router-dom';
+import {NavLink as Link, Redirect} from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 
 import { Home, Brand } from './header-components';
@@ -21,11 +22,19 @@ export interface IHeaderProps {
 
 export interface IHeaderState {
   menuOpen: boolean;
+  searchValue: string;
+  results: Array<String>;
 }
 
 export default class Header extends React.Component<IHeaderProps, IHeaderState> {
-  state: IHeaderState = {
-    menuOpen: false
+  constructor(props) {
+    super(props);
+    this.state  = {
+      menuOpen: false,
+      searchValue: "",
+      results: []
+    }
+
   };
 
   renderDevRibbon = () =>
@@ -39,6 +48,24 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
     this.setState({ menuOpen: !this.state.menuOpen });
   };
 
+
+  handleChange = (event) => {
+      this.setState({searchValue: event.target.value});
+      this.elasticSearch(event.target.value)
+  };
+
+  elasticSearch = (value) => {
+
+    let url = `http://localhost:8080/api/_search/projects?query=${value}`;
+
+      axios.get(url)
+        .then(response => {
+          console.log("Elastic Search Data " + JSON.stringify(response.data));
+          this.setState({results: response.data});
+        });
+
+  };
+
   render() {
     const { isAuthenticated, isAdmin, isSwaggerEnabled, isInProduction } = this.props;
 
@@ -50,13 +77,21 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
         <LoadingBar className="loading-bar" />
         <Navbar dark expand="sm" fixed="top" className="jh-navbar">
           <NavbarToggler aria-label="Menu" onClick={this.toggleMenu} />
-          <Brand />
 
-          <Input placeholder="search for a project" />
+          <div className="header-logo-text-container">
+            <Brand />
+            <h2 className="header-logo-text">Blue Source</h2>
+          </div>
+
+          <Input type="text" value={this.state.searchValue} onChange={this.handleChange} placeholder="search for a project" className="header-search-bar"/>
 
           <Collapse isOpen={this.state.menuOpen} navbar>
             <Nav id="header-tabs" className="ml-auto" navbar>
+              {this.state.results.length > 0 ? <Redirect to='/search-project' /> : null}
+
               <Home />
+
+
               {isAuthenticated && <EntitiesMenu />}
               {isAuthenticated && isAdmin && <AdminMenu showSwagger={isSwaggerEnabled} showDatabase={!isInProduction} />}
               <AccountMenu isAuthenticated={isAuthenticated} />

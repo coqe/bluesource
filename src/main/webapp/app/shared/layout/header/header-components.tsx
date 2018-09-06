@@ -19,8 +19,10 @@ export const NavDropdown = props => (
 );
 
 export const BrandIcon = props => (
-  <div {...props} className="brand-icon">
-    <img src="content/images/bs-logo-1.png" alt="Logo" />
+  <div>
+    <div {...props} className="brand-icon">
+      <img src="content/images/bs-logo-1.png" alt="Logo" />
+    </div>
   </div>
 );
 
