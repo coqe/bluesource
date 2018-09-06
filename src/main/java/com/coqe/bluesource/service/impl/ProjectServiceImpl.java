@@ -1,21 +1,24 @@
 package com.coqe.bluesource.service.impl;
 
-import com.coqe.bluesource.service.ProjectService;
-import com.coqe.bluesource.domain.Project;
-import com.coqe.bluesource.repository.ProjectRepository;
-import com.coqe.bluesource.repository.search.ProjectSearchRepository;
+import static java.util.stream.Collectors.toSet;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.util.Optional;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import com.coqe.bluesource.domain.Keyword;
+import com.coqe.bluesource.domain.Project;
+import com.coqe.bluesource.domain.UserProfile;
+import com.coqe.bluesource.repository.ProjectRepository;
+import com.coqe.bluesource.repository.search.ProjectSearchRepository;
+import com.coqe.bluesource.service.ProjectService;
 
 /**
  * Service Implementation for managing Project.
@@ -108,4 +111,14 @@ public class ProjectServiceImpl implements ProjectService {
     public Page<Project> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Projects for query {}", query);
         return projectSearchRepository.search(queryStringQuery(query), pageable);    }
+    
+    /**
+     *
+     * @param userProfile
+     * @return
+     */
+    @Override
+    public List<Project> findAllByUsersSkills(final UserProfile userProfile) {
+        return projectRepository.findAllByUsersSkills(userProfile.getSkills().stream().map(Keyword::getId).collect(toSet()));
+    }
 }

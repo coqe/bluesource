@@ -1,11 +1,13 @@
 package com.coqe.bluesource.service;
 
-import com.coqe.bluesource.domain.Project;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Optional;
+import com.coqe.bluesource.domain.Project;
+import com.coqe.bluesource.domain.UserProfile;
 
 /**
  * Service Interface for managing Project.
@@ -59,4 +61,11 @@ public interface ProjectService {
      * @return the list of entities
      */
     Page<Project> search(String query, Pageable pageable);
+    
+    /**
+     *
+     * @param userProfile
+     * @return
+     */
+    List<Project> findAllByUsersSkills(UserProfile userProfile);
 }

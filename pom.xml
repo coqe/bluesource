@@ -110,6 +110,14 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.kohsuke</groupId>
+            <artifactId>github-api</artifactId>
+            <version>1.94</version>
+        </dependency>
+
+
         <dependency>
             <groupId>io.github.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
