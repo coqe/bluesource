@@ -56,4 +56,16 @@ public class GitHubRepoDetails implements RepoDetails<GitHubRepo> {
         }
     }
     
+    public RepoDetailsDto toRepoDetailsDto(GitHubRepo repo){
+        RepoDetailsDto dto = new RepoDetailsDto();
+        dto.setContributors(getContributors(repo));
+        dto.setCreatedDate(getCreatedDate(repo));
+        dto.setDescription(getDescription(repo));
+        dto.setFullname(getFullname(repo));
+        dto.setHomepage(getHomepage(repo));
+        dto.setLabels(getLabels(repo));
+        dto.setOpenIssuesCount(getOpenIssuesCount(repo));
+        return dto;
+    }
+    
 }

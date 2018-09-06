@@ -75,10 +75,7 @@ export class Profile extends React.Component<IProfileProp> {
               </Input>
             </FormGroup>
             <FormGroup>
-              <Label for="technologies">Your Skills: {Object.keys(this.props.profile).length > 0 ? this.technologies(this.props.profile.skills) : "none"}</Label>
-            </FormGroup>
-            <FormGroup>
-              <Label for="technologiesNotWorking">Your Skills (not working)</Label>
+              <Label for="technologiesNotWorking">Your Skills</Label>
               <TagsInput value={this.props.tags} onChange={this.handleChange} />
             </FormGroup>
 
@@ -97,10 +94,6 @@ export class Profile extends React.Component<IProfileProp> {
                 {/*scale={1.0}*/}
                 {/*rotate={0}*/}
               {/*/>*/}
-            </FormGroup>
-            <FormGroup>
-              <p>Image value: {this.props.account.imageUrl}</p>
-
             </FormGroup>
             <FormGroup>
               <Input type="file" name="file" id="exampleFile" />
@@ -125,7 +118,7 @@ const mapStateToProps = storeState => {
     isAuthenticated: storeState.authentication.isAuthenticated,
     projectList: storeState.project.entities,
     profile: storeState.userProfile.entity,
-    tags: []
+    tags: ["objective-c", "excel"]
   });
 }
 const mapDispatchToProps = {
