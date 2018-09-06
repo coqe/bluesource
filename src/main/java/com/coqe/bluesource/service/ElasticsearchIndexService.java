@@ -1,22 +1,5 @@
 package com.coqe.bluesource.service;
 
-import com.codahale.metrics.annotation.Timed;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.coqe.bluesource.domain.*;
-import com.coqe.bluesource.repository.*;
-import com.coqe.bluesource.repository.search.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.ManyToMany;
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
@@ -29,6 +12,42 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.codahale.metrics.annotation.Timed;
+import com.coqe.bluesource.domain.Comment;
+import com.coqe.bluesource.domain.Issue;
+import com.coqe.bluesource.domain.Keyword;
+import com.coqe.bluesource.domain.Project;
+import com.coqe.bluesource.domain.Repo;
+import com.coqe.bluesource.domain.User;
+import com.coqe.bluesource.domain.UserProfile;
+import com.coqe.bluesource.repository.CommentRepository;
+import com.coqe.bluesource.repository.IssueRepository;
+import com.coqe.bluesource.repository.KeywordRepository;
+import com.coqe.bluesource.repository.ProjectRepository;
+import com.coqe.bluesource.repository.RepoRepository;
+import com.coqe.bluesource.repository.UserProfileRepository;
+import com.coqe.bluesource.repository.UserRepository;
+import com.coqe.bluesource.repository.search.CommentSearchRepository;
+import com.coqe.bluesource.repository.search.IssueSearchRepository;
+import com.coqe.bluesource.repository.search.KeywordSearchRepository;
+import com.coqe.bluesource.repository.search.ProjectSearchRepository;
+import com.coqe.bluesource.repository.search.RepoSearchRepository;
+import com.coqe.bluesource.repository.search.UserProfileSearchRepository;
+import com.coqe.bluesource.repository.search.UserSearchRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Service
 @Transactional(readOnly = true)

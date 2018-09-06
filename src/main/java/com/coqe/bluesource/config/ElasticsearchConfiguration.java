@@ -1,5 +1,6 @@
 package com.coqe.bluesource.config;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 import org.elasticsearch.client.Client;
@@ -12,6 +13,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.EntityMapper;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import com.coqe.bluesource.service.ElasticsearchIndexService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -45,4 +47,5 @@ public class ElasticsearchConfiguration {
             return objectMapper.readValue(source, clazz);
         }
     }
+    
 }
