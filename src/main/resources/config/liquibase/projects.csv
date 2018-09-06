@@ -1,4 +1,13 @@
 id;name;created_at;due_date;description;logo;logo_content_type;interest;status;issue_tracker_uri;attachment;attachment_content_type;repo_id;created_by_id
 1;Blue Sauce;2018-09-05 12:01:02.003;2018-10-05 12:01:02.003;Dont develop whatever without it;;;20;OPEN;https://something.rallydev.com/project/whatever;;;1;5
 2;Kafka Crypto Serdes;2018-02-10 08:01:02.003;2019-02-10 08:01:02.003;Kafka Crypto Serdes provides the ability to publish and subscribe to streams of records securely.;;;11;DRAFT;https://jira.com/kcs;;;2;7
-3;The Mad Dog Experience;2018-07-07 08:01:02.003;2019-12-12 08:01:02.003;Mad Dog invites you to join him in a world;;;0;ATTIC;;;;3;8
+3;The Jimmy Phillips Experience;2018-07-07 08:01:02.003;2019-12-12 08:01:02.003;Jimmy Phillips invites you to join him in a world;;;0;OPEN;;;;3;8
+4;SwiftFormat;2018-09-05 15:59:47;2019-09-05 15:59:47;A code library and command-line formatting tool for reformatting Swift code;;;0;OPEN;;;;4;6
+5;Carthage;2018-09-05 16:00:06;2019-09-05 16:00:06;A simple, decentralized dependency manager for Cocoa;;;0;OPEN;;;;5;8
+6;eslint;2018-09-05 15:59:37;2019-09-05 15:59:37;This is American Express' eslint config;;;0;OPEN;;;;6;6
+7;nodes react;2018-09-05 15:59:09;2019-09-05 15:59:09;A React GraphQL JVM Client - Java, Kotlin, Scala, etc.;;;0;OPEN;;;;7;8
+8;react dashboard;2018-09-05 15:59:20;2019-09-05 15:59:20;React dashboard matcher for image comparisons. Most commonly used for visual regression testing.;;;0;OPEN;;;;8;6
+9;react kafka;2018-09-06 08:35:16;2019-09-06 08:35:16;Kafka React Crypto Serdes provides the ability to publish and subscribe to streams of records securely.;;;0;OPEN;;;;9;8
+10;gabby dashboarding;2018-09-05 16:00:25;2019-09-05 16:00:25;Gabby provides a dashboard way to interface with several chatbot providers through "adapters". Adapters interface with different services such as api.ai and Watson Conversation.;;;0;OPEN;;;;10;6
+11;iguazu;2018-09-05 15:59:27;2019-09-05 15:59:27;An asynchronous data flow solution for React/Redux applications;;;0;OPEN;;;;11;8
+12;vitruvius;2018-09-05 15:59:56;2019-09-05 15:59:56;Vitruvius extends redux's combineReducers to allow developers to include a buildInitialState method on their reducer;;;0;OPEN;;;;12;6
