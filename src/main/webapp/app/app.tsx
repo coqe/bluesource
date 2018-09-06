@@ -22,12 +22,11 @@ export interface IAppProps extends StateProps, DispatchProps {}
 export class App extends React.Component<IAppProps> {
 
   componentDidMount() {
-    if (this.props.isAuthenticated) {
-      this.props.getSession();
-      this.props.getProfile();
-    }
+    // if (this.props.isAuthenticated) {
+    this.props.getSession();
+    this.props.getProfile();
+    // }
   }
-
   render() {
     const paddingTop = '60px';
     return (
