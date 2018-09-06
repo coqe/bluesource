@@ -50,14 +50,8 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
 
 
   handleChange = (event) => {
-
-    if(event.target.value < 3) {
-      this.setState({results: []});
-    } else {
-
       this.setState({searchValue: event.target.value});
       this.elasticSearch(event.target.value)
-    }
   };
 
   elasticSearch = (value) => {
@@ -93,7 +87,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
 
           <Collapse isOpen={this.state.menuOpen} navbar>
             <Nav id="header-tabs" className="ml-auto" navbar>
-              {this.state.results.length > 0 ? <Redirect to='/dashboard' /> : null}
+              {this.state.results.length > 0 ? <Redirect to='/search-project' /> : null}
 
               <Home />
 
