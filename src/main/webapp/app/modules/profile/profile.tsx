@@ -83,7 +83,8 @@ export class Profile extends React.Component<IProfileProp> {
           </Form>
   </Col>
   <Col xl={4}>
-          <Form>
+    <img src={this.props.account.imageUrl} height={150} width={150}/>
+    <Form>
             <FormGroup>
               {/*<AvatarEditor*/}
                 {/*image="../../../content/images/hipster192.png"*/}
@@ -94,6 +95,8 @@ export class Profile extends React.Component<IProfileProp> {
                 {/*scale={1.0}*/}
                 {/*rotate={0}*/}
               {/*/>*/}
+
+
             </FormGroup>
             <FormGroup>
               <Input type="file" name="file" id="exampleFile" />
