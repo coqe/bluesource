@@ -2,7 +2,7 @@ import { isPromise } from 'react-jhipster';
 import { toast } from 'react-toastify';
 
 const addErrorAlert = (message, key?, data?) => {
-  toast.error(message);
+  // toast.error(message);
 };
 export default () => next => action => {
   // If not a promise, continue on
@@ -35,7 +35,7 @@ export default () => next => action => {
     })
     .catch(error => {
       if (action.meta && action.meta.errorMessage) {
-        toast.error(action.meta.errorMessage);
+        // toast.error(action.meta.errorMessage);
       } else if (error && error.response) {
         const response = error.response;
         const data = response.data;
@@ -93,9 +93,9 @@ export default () => next => action => {
           }
         }
       } else if (error && error.message) {
-        toast.error(error.message);
+        // toast.error(error.message);
       } else {
-        toast.error('Unknown error!');
+        // toast.error('Unknown error!');
       }
       return Promise.reject(error);
     });

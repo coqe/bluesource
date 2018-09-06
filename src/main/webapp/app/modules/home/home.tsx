@@ -111,8 +111,6 @@ export class Home extends React.Component<IHomeProp> {
       const userSkills = this.props.profile.skills.map((skill) => skill.word)
       const userRecommendedProjects = this.props.projectList.filter((project) => {
         const tech = project.technologies.map((tech) => tech.word)
-        console.log(userSkills)
-        console.log(tech)
         return userSkills.some(r=> tech.includes(r))
       });
       recommendProjects = userRecommendedProjects.filter((project) => {
@@ -148,8 +146,8 @@ export class Home extends React.Component<IHomeProp> {
 }
 
 const mapStateToProps = storeState => {
-  console.log("###################################")
-  console.log(storeState);
+  // console.log("###################################")
+  // console.log(storeState);
   return ({
     account: storeState.authentication.account,
     userId: storeState.authentication.account.id,
