@@ -8,7 +8,7 @@ import { Row, Col, Alert, Input, Table, Form, FormGroup, FormText, Label, Badge,
 
 import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
-import { getSearchEntities, getEntities, reset } from 'app/entities/project/project.reducer';
+import { getUserProjects, getSearchEntities, getEntities, reset } from 'app/entities/project/project.reducer';
 
 import { getEntity } from 'app/entities/user-profile/user-profile.reducer';
 
@@ -33,6 +33,8 @@ export class Home extends React.Component<IHomeProp> {
     }
     if (this.props.account.id != undefined) {
       this.props.getEntity(this.props.account.id);
+      console.log("fetching user projects " + this.props.account.id)
+      this.props.getUserProjects(this.props.account.id);
     }
   }
 
@@ -104,6 +106,19 @@ export class Home extends React.Component<IHomeProp> {
       }).length > 0
     });
 
+    let recommendProjects = [];
+    if (this.props.profile.skills) {
+      const userSkills = this.props.profile.skills.map((skill) => skill.word)
+      const userRecommendedProjects = this.props.projectList.filter((project) => {
+        const tech = project.technologies.map((tech) => tech.word)
+        console.log(userSkills)
+        console.log(tech)
+        return userSkills.some(r=> tech.includes(r))
+      });
+      recommendProjects = userRecommendedProjects.filter((project) => {
+        return !userProjects.includes(project)
+      })
+    }
 
     return (
       <Row className="projects-container">
@@ -119,6 +134,7 @@ export class Home extends React.Component<IHomeProp> {
 
           <hr />
           <h4>Recommended Projects</h4>
+          {this.listProjects(recommendProjects)}
 
           <hr />
           <h4>Latest Projects</h4>
@@ -132,6 +148,7 @@ export class Home extends React.Component<IHomeProp> {
 }
 
 const mapStateToProps = storeState => {
+  console.log("###################################")
   console.log(storeState);
   return ({
     account: storeState.authentication.account,
@@ -147,7 +164,8 @@ const mapDispatchToProps = {
   getSession,
   getSearchEntities,
   getEntities,
-  getEntity
+  getEntity,
+  getUserProjects
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

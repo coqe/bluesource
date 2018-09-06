@@ -15,6 +15,7 @@ import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util'
 import { IProject, defaultValue } from 'app/shared/model/project.model';
 
 export const ACTION_TYPES = {
+  FETCH_USER_PROJECTS: 'userprojects/FETCH_USER_PROJECTS',
   SEARCH_PROJECTS: 'project/SEARCH_PROJECTS',
   FETCH_PROJECT_LIST: 'project/FETCH_PROJECT_LIST',
   FETCH_PROJECT: 'project/FETCH_PROJECT',
@@ -42,6 +43,15 @@ export type ProjectState = Readonly<typeof initialState>;
 
 export default (state: ProjectState = initialState, action): ProjectState => {
   switch (action.type) {
+    case REQUEST(ACTION_TYPES.FETCH_USER_PROJECTS):
+      console.log("fetch user projects")
+      console.log(state)
+      return {
+        ...state,
+        errorMessage: null,
+        updateSuccess: false,
+        loading: true
+      };
     case REQUEST(ACTION_TYPES.SEARCH_PROJECTS):
     case REQUEST(ACTION_TYPES.FETCH_PROJECT_LIST):
     case REQUEST(ACTION_TYPES.FETCH_PROJECT):
@@ -132,6 +142,12 @@ const apiUrl = 'api/projects';
 const apiSearchUrl = 'api/_search/projects';
 
 // Actions
+
+export const getUserProjects: ICrudSearchAction<IProject> = id => ({
+  type: ACTION_TYPES.FETCH_USER_PROJECTS,
+  payload: axios.get<IProject>(`api/user-profiles/${id}/projects`)
+});
+
 
 export const getSearchEntities: ICrudSearchAction<IProject> = query => ({
   type: ACTION_TYPES.SEARCH_PROJECTS,
