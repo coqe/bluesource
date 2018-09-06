@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import io.github.jhipster.web.util.ResponseUtil;
 
+import org.kohsuke.github.GHRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.coqe.bluesource.domain.Repo;
+import com.coqe.bluesource.repomanager.ExternalRepo;
+import com.coqe.bluesource.repomanager.GitHubRepo;
+import com.coqe.bluesource.repomanager.GitHubRepoDetails;
+import com.coqe.bluesource.repomanager.RepoDetailsDto;
 import com.coqe.bluesource.service.RepoService;
 import com.coqe.bluesource.web.rest.errors.BadRequestAlertException;
 import com.coqe.bluesource.web.rest.util.HeaderUtil;
@@ -143,6 +148,13 @@ public class RepoResource {
     public List<Repo> searchRepos(@RequestParam String query) {
         log.debug("REST request to search Repos for query {}", query);
         return repoService.search(query);
+    }
+    
+    @GetMapping("/repos/github")
+    @Timed
+    public RepoDetailsDto checkGithub(@RequestParam String githubUri){
+        ExternalRepo<GHRepository> ghr = GitHubRepo.findRepo(githubUri);
+        return new GitHubRepoDetails().toRepoDetailsDto((GitHubRepo) ghr);
     }
 
 }
