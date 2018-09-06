@@ -35,7 +35,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
           loginError={this.props.loginError}
         />
         <div className="banner-image-container">
-          <img src="content/images/worldmapannotated.png" className="banner-image" alt="Logo" />
+          <img src="content/images/worldmap_svg.svg" className="banner-image" alt="Logo" />
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
     const { showModal } = this.state;
 
     if (isAuthenticated) {
-      return <Redirect to="/home" />;
+      return <Redirect to="/home" />
     }
     return (
       <div>

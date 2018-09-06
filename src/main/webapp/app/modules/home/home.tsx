@@ -101,7 +101,6 @@ export class Home extends React.Component<IHomeProp> {
           <hr />
           <h4>Recommended Projects</h4>
 
-
           <hr />
           <h4>Latest Projects</h4>
           <h5>{this.props.projectList.length} Result(s)</h5>
@@ -111,9 +110,9 @@ export class Home extends React.Component<IHomeProp> {
             this.props.projectList.map( (project, i) => (
                 <Card key={i}>
                   <CardBody>
-                    <Badge key={i} color="primary" className={"projects-interest"}>{project.interest}</Badge>
+                    <Badge key={i} color="primary" className={"projects-interest"} alt="Interest score">{project.interest}</Badge>
                     <CardTitle>{project.name}</CardTitle>
-                    <p className={"projects-repo-url"}>{project.repo.uri}</p>
+                    <a href={project.repo.uri} target="_blank" className="projects-repo-url">{project.repo.uri}</a>
                     {this.technologies([{"word":"spring"},{"word":"react"},{"word":"dashboard"}])}
                     {this.contributors(project.contributors)}
                     <CardText>{project.description}</CardText>

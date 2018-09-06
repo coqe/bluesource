@@ -299,6 +299,7 @@ ui bootstrap tweaks
 .banner-image {
   width: 100%;
   max-height: 100%;
+  fill: green;
 }
 
 .search-project-container {
@@ -355,6 +356,12 @@ ui bootstrap tweaks
 .projects-repo-url {
   color:#2E70C8;
   margin:0;
+  font-weight:normal;
+}
+.projects-repo-url:hover {
+  font-weight:normal;
+  color:#2E70C8;
+  text-decoration: underline;
 }
 
 .projects-current-container h5 {
