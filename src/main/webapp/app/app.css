@@ -376,3 +376,7 @@ ui bootstrap tweaks
 .badge {
   margin-right:.25em;
 }
+
+.projects-interest {
+  float:right;
+}
